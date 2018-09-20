@@ -10,7 +10,7 @@
 #import "HCFavoriteIconModel.h"
 #import "HCAssistant.h"
 
-static const CGFloat iconLabelHeight = 36.0f;
+static const CGFloat iconLabelHeight = 20.0f;
 static const CGFloat iconLabelFont = 13.0f;
 static const CGFloat littleIconSpace = 3;
 @implementation HCFavoriteFolderView{

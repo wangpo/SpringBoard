@@ -80,10 +80,10 @@ const NSInteger drawIconTag = 222;
         for (int i = 0; i < pageCount; i++) {
             UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, CGRectGetHeight(loveScrollView.frame))];
             page.userInteractionEnabled = YES;
-            //[self addLineAtPageWithOnePageRow:rowOnePage andPageView:page];
             [pagesView addObject:page];
         }
-         [self layoutWithPages:scrollRect];
+        
+        [self layoutWithPages:scrollRect];
         
         //根据不同的数据模型创建对应的图标和文件夹
         _favoriteViewArray = [[NSMutableArray alloc]init];
@@ -909,10 +909,17 @@ const NSInteger drawIconTag = 222;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     lovePageControl.currentPage = scrollView.contentOffset.x/CGRectGetWidth(scrollView.frame);
     
+    
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    del.launcherController.titleLabel.text = (lovePageControl.currentPage == 0)?@"自然人":@"法人";
-    
-    
+    if (lovePageControl.currentPage == 0) {
+         del.launcherController.titleLabel.text = @"公民";
+    } else  if (lovePageControl.currentPage == 1) {
+        del.launcherController.titleLabel.text = @"法人";
+    } else if (lovePageControl.currentPage == 2) {
+        del.launcherController.titleLabel.text = @"公务员";
+    } else {
+        del.launcherController.titleLabel.text = @"";
+    }
 }
 
 #pragma mark - 贴上PageView
@@ -987,7 +994,10 @@ const NSInteger drawIconTag = 222;
 }
 #pragma mark - 判断需要多少行高
 - (NSInteger)getOnePageRomByDevice {
-    NSInteger row = 5;
+    NSInteger row = 4;
+    if (IPHONE6Plus || IPhoneX) {
+        return 5;
+    }
     return row;
 }
 #pragma mark - 计算九宫格Frame

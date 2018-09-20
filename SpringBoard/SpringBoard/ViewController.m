@@ -7,9 +7,8 @@
 //
 
 #import "ViewController.h"
-#define isIPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+#import "HCAssistant.h"
 
-#define BFLStatusBarHeight      (isIPhoneX ? 44 : 20)
 @interface ViewController () {
     
     NSMutableArray *_iconModelsArray;
@@ -25,16 +24,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
    
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (isIPhoneX ? 88 : 64))];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
     topView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.2];
     [self.view addSubview:topView];
     
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (isIPhoneX ? 44 : 20), kScreenSize.width, 44)];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 44)];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.textColor = [UIColor whiteColor];
     _titleLabel.font = [UIFont systemFontOfSize:16.0f];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.text = @"自然人";
+    _titleLabel.text = @"公民";
     [topView addSubview:_titleLabel];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -91,14 +90,14 @@
     }
     
     //根据数据显示菜单
-    CGRect sbRect = CGRectMake(0,  64, kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
+    CGRect sbRect = CGRectMake(0,  (IPhoneX ? 88 : 64), kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
     
     _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
     
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 100, kScreenSize.width, 100)];
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 110, kScreenSize.width, 100)];
     bottomView.backgroundColor  = [UIColor clearColor];
     [self.view addSubview:bottomView];
     
@@ -129,7 +128,7 @@
 #pragma mark - BankListDelegate
 //显示在列表页勾选图标
 - (void)addIconDone:(HCBankListViewController *)bankListViewController {
-    CGRect sbRect = CGRectMake(0, 64, kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
+    CGRect sbRect = CGRectMake(0, (IPhoneX ? 88 : 64), kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
     
     [_springBoard removeFromSuperview];
     _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];

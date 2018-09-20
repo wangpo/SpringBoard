@@ -36,6 +36,11 @@
 
 #define IPHONE6Plus ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2208), [[UIScreen mainScreen] currentMode].size) : NO)
 
+#define IPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
+
+
+#define BFLStatusBarHeight      (IPhoneX ? 44 : 20)
+
 #define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width-1)/4
 #define ICONIMG_HEIGHT ICONIMG_WIDTH
 #define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-21)/3

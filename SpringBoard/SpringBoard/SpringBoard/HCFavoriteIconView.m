@@ -12,7 +12,7 @@
 static const CGFloat iconButtonWitdh = 60.0f;
 static const CGFloat iconDeleteButtonWitdh = 20.0f;
 static const CGFloat iconNewFlagViewWith = 40.0f;
-static const CGFloat iconLabelHeight = 36.0f;
+static const CGFloat iconLabelHeight = 20.0f;
 static const CGFloat iconLabelFont = 13.0f;
 @implementation HCFavoriteIconView {
     UIButton *menuButton;
