@@ -43,13 +43,13 @@
 
 #define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width-1)/4
 #define ICONIMG_HEIGHT ICONIMG_WIDTH
-#define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-21)/3
+#define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-40)/3
 #define ICONIMG_HEIGHT_Float ICONIMG_WIDTH_Float+5
 
 #define ICONIMG_LEVEL 1
-#define ICONIMG_LEVEL_SPACE 0.5
+#define ICONIMG_LEVEL_SPACE 0
 #define ICONIMG_VERTICAL 30
-#define ICONIMG_VERTICAL_SPACE 0.5
+#define ICONIMG_VERTICAL_SPACE 0
 
 #pragma mark - 文件路径
 #define kMenuFileName @"menu.json"

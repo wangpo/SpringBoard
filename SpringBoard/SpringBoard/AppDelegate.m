@@ -9,7 +9,8 @@
 #import "AppDelegate.h"
 #import "HCAssistant.h"
 #import "ViewController.h"
-#import "HCNavigationController.h"
+#import "HCRootViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -25,11 +26,11 @@
         [HCAssistant initMainMenu];
         [ud setBool:YES forKey:kIsFirst];
     }
-    
-    self.launcherController = [[ViewController alloc] init];
-    HCNavigationController *nav = [[HCNavigationController alloc] initWithRootViewController:self.launcherController];
-    nav.navigationBarHidden = YES;
-    self.window.rootViewController = nav;
+
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor clearColor]} forState:UIControlStateNormal];
+
+    self.launcherController = [[HCRootViewController alloc] init];
+    self.window.rootViewController = self.launcherController;
     [self.window makeKeyAndVisible];
     
     

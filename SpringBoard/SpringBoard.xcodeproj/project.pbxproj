@@ -25,7 +25,9 @@
 		CD23574421522EFE00EE647F /* HCFavoriteFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573621522EFE00EE647F /* HCFavoriteFolderView.m */; };
 		CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573921522EFE00EE647F /* HCBankListViewController.m */; };
 		CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573A21522EFE00EE647F /* HCFavoriteIconView.m */; };
-		CD2357492152732E00EE647F /* HCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2357482152732E00EE647F /* HCNavigationController.m */; };
+		CD5BED1F21533ABA004654DA /* HCPreviousPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED1E21533ABA004654DA /* HCPreviousPage.m */; };
+		CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED21215348FE004654DA /* HCWebViewController.m */; };
+		CD5BED2521539734004654DA /* HCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED2421539734004654DA /* HCRootViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,8 +65,12 @@
 		CD23573821522EFE00EE647F /* HCFavoriteFolderMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderMenuView.h; sourceTree = "<group>"; };
 		CD23573921522EFE00EE647F /* HCBankListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCBankListViewController.m; sourceTree = "<group>"; };
 		CD23573A21522EFE00EE647F /* HCFavoriteIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconView.m; sourceTree = "<group>"; };
-		CD2357472152732E00EE647F /* HCNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCNavigationController.h; sourceTree = "<group>"; };
-		CD2357482152732E00EE647F /* HCNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCNavigationController.m; sourceTree = "<group>"; };
+		CD5BED1D21533ABA004654DA /* HCPreviousPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPreviousPage.h; sourceTree = "<group>"; };
+		CD5BED1E21533ABA004654DA /* HCPreviousPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPreviousPage.m; sourceTree = "<group>"; };
+		CD5BED20215348FE004654DA /* HCWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCWebViewController.h; sourceTree = "<group>"; };
+		CD5BED21215348FE004654DA /* HCWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCWebViewController.m; sourceTree = "<group>"; };
+		CD5BED2321539734004654DA /* HCRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCRootViewController.h; sourceTree = "<group>"; };
+		CD5BED2421539734004654DA /* HCRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCRootViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +106,10 @@
 				CD23572121522EFE00EE647F /* SpringBoard */,
 				CD23570B21522E8D00EE647F /* AppDelegate.h */,
 				CD23570C21522E8D00EE647F /* AppDelegate.m */,
-				CD2357472152732E00EE647F /* HCNavigationController.h */,
-				CD2357482152732E00EE647F /* HCNavigationController.m */,
+				CD5BED2321539734004654DA /* HCRootViewController.h */,
+				CD5BED2421539734004654DA /* HCRootViewController.m */,
+				CD5BED20215348FE004654DA /* HCWebViewController.h */,
+				CD5BED21215348FE004654DA /* HCWebViewController.m */,
 				CD23570E21522E8D00EE647F /* ViewController.h */,
 				CD23570F21522E8D00EE647F /* ViewController.m */,
 				CD23571121522E8D00EE647F /* Main.storyboard */,
@@ -136,6 +144,8 @@
 				CD23572521522EFE00EE647F /* HCIndexRect.m */,
 				CD23573421522EFE00EE647F /* HCSpringBoardView.h */,
 				CD23572421522EFE00EE647F /* HCSpringBoardView.m */,
+				CD5BED1D21533ABA004654DA /* HCPreviousPage.h */,
+				CD5BED1E21533ABA004654DA /* HCPreviousPage.m */,
 				CD23572D21522EFE00EE647F /* YYModel */,
 			);
 			path = SpringBoard;
@@ -224,7 +234,7 @@
 			files = (
 				CD23571021522E8D00EE647F /* ViewController.m in Sources */,
 				CD23574221522EFE00EE647F /* YYClassInfo.m in Sources */,
-				CD2357492152732E00EE647F /* HCNavigationController.m in Sources */,
+				CD5BED1F21533ABA004654DA /* HCPreviousPage.m in Sources */,
 				CD23574121522EFE00EE647F /* NSObject+YYModel.m in Sources */,
 				CD23573D21522EFE00EE647F /* HCIndexRect.m in Sources */,
 				CD23574021522EFE00EE647F /* HCAssistant.m in Sources */,
@@ -236,7 +246,9 @@
 				CD23570D21522E8D00EE647F /* AppDelegate.m in Sources */,
 				CD23573E21522EFE00EE647F /* HCFavoriteFolderModel.m in Sources */,
 				CD23574421522EFE00EE647F /* HCFavoriteFolderView.m in Sources */,
+				CD5BED2521539734004654DA /* HCRootViewController.m in Sources */,
 				CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */,
+				CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */,
 				CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

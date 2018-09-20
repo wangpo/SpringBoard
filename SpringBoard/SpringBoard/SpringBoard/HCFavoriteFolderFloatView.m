@@ -20,9 +20,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:215.0/255.0 green:215.0/255.0 blue:215.0/255.0 alpha:.7];
+        self.backgroundColor = [UIColor colorWithRed:215.0/255.0 green:215.0/255.0 blue:215.0/255.0 alpha:.8];
         
-        folderNameField = [[UITextField alloc]initWithFrame:CGRectMake(20, 64, ScreenWidth-40, 40)];
+        folderNameField = [[UITextField alloc]initWithFrame:CGRectMake(20, 100, ScreenWidth-40, 40)];
         folderNameField.font = [UIFont systemFontOfSize:30];
         folderNameField.delegate = self;
         folderNameField.clearButtonMode = UITextFieldViewModeAlways;
@@ -39,11 +39,11 @@
     self = [self initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     self.loveFolderModel = model;
     
-    folderMenuView = [[HCFavoriteFolderMenuView alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(folderNameField.frame)+20, ScreenWidth-20, ScreenWidth+20)
+    folderMenuView = [[HCFavoriteFolderMenuView alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(folderNameField.frame)+20, ScreenWidth-40, ScreenWidth)
                                                        menuModels:_loveFolderModel.iconModelsFolderArray
                                                         menuIcons:_loveFolderModel.iconViewsFolderArray];
     folderMenuView.folderMenuDelegate = self;
-    folderMenuView.backgroundColor = [UIColor clearColor];
+    folderMenuView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
     folderMenuView.layer.cornerRadius = 20;
     folderMenuView.clipsToBounds = YES;
     [self addSubview:folderMenuView];

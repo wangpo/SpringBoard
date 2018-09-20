@@ -13,6 +13,8 @@
 #import "HCFavoriteFolderFloatView.h"
 #import "HCFavoriteFolderMenuView.h"
 #import "AppDelegate.h"
+#import "HCPreviousPage.h"
+#import "HCWebViewController.h"
 @interface HCSpringBoardView()
 {
     NSMutableArray *allFrame;//几页图标的frame
@@ -59,7 +61,7 @@ const NSInteger drawIconTag = 222;
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0, 0, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_LEVEL_SPACE)+20);
+        CGRect scrollRect = CGRectMake(0, 20, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_LEVEL_SPACE)+60);
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -73,7 +75,7 @@ const NSInteger drawIconTag = 222;
                            initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+40, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
-//        lovePageControl.backgroundColor = [UIColor redColor];
+        lovePageControl.backgroundColor = [UIColor clearColor];
         [self addSubview: lovePageControl];
         
         pagesView = [[NSMutableArray alloc]init];
@@ -609,8 +611,15 @@ const NSInteger drawIconTag = 222;
 }
 - (void)pushPageOfLoveIconView:(HCFavoriteIconView *)iconView {
     if (!_isEdit) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"下一页" message:iconView.loveIconModel.targetController delegate:nil cancelButtonTitle:@"返回" otherButtonTitles:nil, nil];
-        [alert show];
+        
+        
+        HCWebViewController *webVC = [[HCWebViewController alloc] init];
+        webVC.title = iconView.loveIconModel.name;
+        webVC.url = @"http://www.baidu.com";
+        AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [del.launcherController presentViewController:webVC animated:YES completion:nil];
+        
+        
     }
     else {
         [self doneButtonAction:nil];
@@ -639,7 +648,7 @@ const NSInteger drawIconTag = 222;
         HCBankListViewController *menuListViewController = [[HCBankListViewController alloc]initWithMainMenu:controller.favoriteMainMenu.itemList];
         menuListViewController.allMenuModels = _favoriteModelArray;
         menuListViewController.bankListDelegate = controller;
-        [controller.navigationController pushViewController:menuListViewController animated:YES];
+        [controller presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
     }
 }
 
@@ -688,7 +697,6 @@ const NSInteger drawIconTag = 222;
     [UIView animateWithDuration:.5 animations:^{
         for (int i = 0; i < array.count; i++) {
             CGRect rect = CGRectFromString(allFrame[i]);
-            
             UIView *iconView = array[i];
             iconView.frame = rect;
         }
@@ -837,8 +845,8 @@ const NSInteger drawIconTag = 222;
         HCIndexRect *indexRect = indexRectArray[i];
         if (CGRectContainsPoint(indexRect.iconFolderRect, scrollPoint)) {
             return @{@"toIndex":@(indexRect.iconIndex),@"isFolder":@YES};
-        }
-        else if (CGRectContainsPoint(indexRect.iconRect, scrollPoint)) {
+            
+        }else if (CGRectContainsPoint(indexRect.iconRect, scrollPoint)) {
             
             return @{@"toIndex":@(indexRect.iconIndex),@"isFolder":@NO};
         }
@@ -897,7 +905,6 @@ const NSInteger drawIconTag = 222;
 -(void)setCurrentPage:(NSInteger)pageIndex;
 {
     lovePageControl.currentPage = pageIndex;
-    
     [loveScrollView setContentOffset:CGPointMake(lovePageControl.currentPage*CGRectGetWidth(loveScrollView.frame), 0)];
     
 }
@@ -909,17 +916,18 @@ const NSInteger drawIconTag = 222;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     lovePageControl.currentPage = scrollView.contentOffset.x/CGRectGetWidth(scrollView.frame);
     
-    
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    if (lovePageControl.currentPage == 0) {
-         del.launcherController.titleLabel.text = @"公民";
+        
+     if (lovePageControl.currentPage == 0) {
+         del.launcherController.nextViewController.titleLabel.text = @"公民";
     } else  if (lovePageControl.currentPage == 1) {
-        del.launcherController.titleLabel.text = @"法人";
+        del.launcherController.nextViewController.titleLabel.text = @"法人";
     } else if (lovePageControl.currentPage == 2) {
-        del.launcherController.titleLabel.text = @"公务员";
+        del.launcherController.nextViewController.titleLabel.text = @"公务员";
     } else {
-        del.launcherController.titleLabel.text = @"";
+        del.launcherController.nextViewController.titleLabel.text = @"";
     }
+    
 }
 
 #pragma mark - 贴上PageView
@@ -928,7 +936,6 @@ const NSInteger drawIconTag = 222;
     loveScrollView.contentSize = CGSizeMake(CGRectGetWidth(pageRect) * [pagesView count], CGRectGetHeight(loveScrollView.frame));
     lovePageControl.numberOfPages = [pagesView count];
     lovePageControl.currentPage = 0;
-    
     for(int i=0;i<[pagesView count];i++) {
         UIView *page = [pagesView objectAtIndex: i];
         CGRect bounds = page.bounds;
@@ -936,6 +943,7 @@ const NSInteger drawIconTag = 222;
         page.frame = frame;
         page.bounds = bounds;
         [loveScrollView addSubview: page];
+    
     }
 }
 #pragma mark - 给pageView加横竖线 破代码待优化
@@ -963,7 +971,6 @@ const NSInteger drawIconTag = 222;
                                               andOnePageIcon:(NSInteger)onePage{
     NSMutableArray *pagesFramesArray = [[NSMutableArray alloc]init];
     indexRectArray = [[NSMutableArray alloc]init];
-    
     for (NSInteger i = 0; i < pageCounts; i++) {
         for (NSInteger j = 0; j < onePage; j++) {
             CGRect iconRect = CGRectFromString(onePageArray[j]);
@@ -972,7 +979,7 @@ const NSInteger drawIconTag = 222;
             
             [pagesFramesArray addObject:iconRectString];
             
-            NSInteger index = j + onePage*i;
+            NSInteger index = j + onePage*(i);
             
             //组织判断区域
             HCIndexRect *indexRect = [[HCIndexRect alloc]initWithIndex:index rect:iconRect];
@@ -1005,7 +1012,7 @@ const NSInteger drawIconTag = 222;
     NSMutableArray *iconRectArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < row; i++) {
         for (int j = 0;j < 4; j++) {
-            CGRect rect = CGRectMake(j*((ScreenWidth/4)+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL_SPACE), ICONIMG_WIDTH, ICONIMG_HEIGHT);
+            CGRect rect = CGRectMake(j*((ScreenWidth/4)), i*(ICONIMG_HEIGHT), ICONIMG_WIDTH, ICONIMG_HEIGHT);
             [iconRectArray addObject:NSStringFromCGRect(rect)];
         }
     }

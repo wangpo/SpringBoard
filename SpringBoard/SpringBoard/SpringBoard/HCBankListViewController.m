@@ -60,7 +60,7 @@
         [_bankListDelegate addIconDone:self];
     }
 
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - TableViewDelegate

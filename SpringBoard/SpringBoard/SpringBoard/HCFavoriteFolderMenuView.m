@@ -53,18 +53,18 @@
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0, 0, ScreenWidth-20, rowOnePage*(ICONIMG_HEIGHT_Float+0.5)+1);
+        CGRect scrollRect = CGRectMake(0,5, ScreenWidth-20, rowOnePage*(ICONIMG_HEIGHT_Float+0.5));
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
-        loveScrollView.backgroundColor = [UIColor whiteColor];
+        loveScrollView.backgroundColor = [UIColor clearColor];
         loveScrollView.showsHorizontalScrollIndicator = NO;
         loveScrollView.showsVerticalScrollIndicator = NO;
         loveScrollView.delegate = self;
         [self addSubview:loveScrollView];
         
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+5, ScreenWidth, 20)];
+                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame), ScreenWidth-40, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
         [self addSubview: lovePageControl];
@@ -137,9 +137,9 @@
     CGRect drawIconRect = [loveScrollView convertRect:iconRect toView:AppWindow];
     
     _drawLoveIconView = [[HCFavoriteIconView alloc]initWithFrame:drawIconRect model:icon.loveIconModel];
-    HCFavoriteIconView *drawIconView = (HCFavoriteIconView *)_drawLoveIconView;
+  
     _drawLoveIconView.tag = drawIconTag;
-    drawIconView.isEditing = YES;
+    _drawLoveIconView.isEditing = YES;
     [AppWindow addSubview:_drawLoveIconView];
     [_drawLoveIconView.layer removeAnimationForKey:@"rocking"];
     
@@ -628,7 +628,7 @@
     NSMutableArray *iconRectArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < row; i++) {
         for (int j = 0;j < 3; j++) {
-            CGRect rect = CGRectMake(j*(ICONIMG_WIDTH_Float+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE)+0.5, ICONIMG_WIDTH_Float, ICONIMG_HEIGHT_Float);
+            CGRect rect = CGRectMake(j*(ICONIMG_WIDTH_Float+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE), ICONIMG_WIDTH_Float, ICONIMG_HEIGHT_Float);
             [iconRectArray addObject:NSStringFromCGRect(rect)];
         }
     }

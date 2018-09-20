@@ -27,9 +27,7 @@ static const CGFloat iconLabelFont = 13.0f;
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
-        
-        
-        menuButton = [[UIButton alloc]initWithFrame:CGRectMake((frame.size.width-iconButtonWitdh)/2, 20.0/320.0*ScreenWidth, iconButtonWitdh, iconButtonWitdh)];
+        menuButton = [[UIButton alloc]initWithFrame:CGRectMake((frame.size.width-iconButtonWitdh)/2, 5, iconButtonWitdh, iconButtonWitdh)];
         [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:menuButton];
         

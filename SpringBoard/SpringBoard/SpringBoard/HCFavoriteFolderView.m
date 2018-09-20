@@ -27,9 +27,9 @@ static const CGFloat littleIconSpace = 3;
 
         littleIconViewArray = [[NSMutableArray alloc]initWithCapacity:4];
         //文件夹四格layer
-        CGFloat layerSize = CGRectGetWidth(frame)-60.0/320.0*ScreenWidth;
+        CGFloat layerSize = 60;
         folderLayer = [[CALayer alloc]init];
-        folderLayer.frame = CGRectMake((CGRectGetWidth(frame)-layerSize)/2.0, 10, layerSize, layerSize);
+        folderLayer.frame = CGRectMake((frame.size.width-layerSize)/2, 5, layerSize, layerSize);
         folderLayer.borderWidth = .5f;
         folderLayer.borderColor = [UIColor lightGrayColor].CGColor;
         folderLayer.cornerRadius = 5;
@@ -73,12 +73,13 @@ static const CGFloat littleIconSpace = 3;
         [littleIconViewArray addObject:littleIconView03];
         [littleIconViewArray addObject:littleIconView04];
         
-        CGFloat labelWidth = CGRectGetWidth(frame)-10.0/320.0*ScreenWidth;
-        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake((frame.size.width-labelWidth)/2, 55.0/320.0*ScreenWidth, labelWidth, iconLabelHeight)];
-        menuLabel.numberOfLines = 0;
+
+        menuLabel = [[UILabel alloc]initWithFrame:CGRectZero];
+        menuLabel.frame =  CGRectMake(5, layerSize+10, CGRectGetWidth(frame)-10, 20);
+        menuLabel.numberOfLines = 1;
         menuLabel.textAlignment = NSTextAlignmentCenter;
         menuLabel.font = [UIFont systemFontOfSize:iconLabelFont];
-        menuLabel.textColor = [UIColor colorWithRed:0.59f green:0.59f blue:0.59f alpha:1.00f];
+        menuLabel.textColor = [UIColor whiteColor];
         menuLabel.text = @"文件夹";
         [self addSubview:menuLabel];
         
