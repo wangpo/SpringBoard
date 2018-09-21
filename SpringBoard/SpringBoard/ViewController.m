@@ -30,6 +30,12 @@
     _navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
     _navBarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
     [self.view addSubview:_navBarView];
+    //高斯模糊
+    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+    effectView.frame = _navBarView.bounds;
+    [_navBarView addSubview:effectView];
+    
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 40)];
     _titleLabel.backgroundColor = [UIColor clearColor];
@@ -148,29 +154,26 @@
     bottomView.backgroundColor  = [UIColor colorWithWhite:0.9 alpha:0.5];
     [self.view addSubview:bottomView];
     
+    //高斯模糊
+    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+    effectView.frame = bottomView.bounds;
+    [bottomView addSubview:effectView];
+
     CGFloat width  = (kScreenSize.width - 125)/ 4;
-    
-    UIButton *pButton1 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [pButton1 setImage:[UIImage imageNamed:@"tab1"] forState:UIControlStateNormal];
-    pButton1.frame = CGRectMake(25, (90-(width))/2, width, width);
-    [bottomView addSubview:pButton1];
-    
-    UIButton *pButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [pButton2 setImage:[UIImage imageNamed:@"tab2"] forState:UIControlStateNormal];
-    pButton2.frame = CGRectMake(50+width, (90-(width))/2, width, width);
-    [bottomView addSubview:pButton2];
-    
-    UIButton *pButton3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [pButton3 setImage:[UIImage imageNamed:@"tab3"] forState:UIControlStateNormal];
-    pButton3.frame = CGRectMake(75+width*2, (90-(width))/2, width, width);
-    [bottomView addSubview:pButton3];
-    
-    UIButton *pButton4 = [UIButton buttonWithType:UIButtonTypeCustom];
-    [pButton4 setImage:[UIImage imageNamed:@"tab4"] forState:UIControlStateNormal];
-    pButton4.frame = CGRectMake(100+width *3,(90-(width))/2, width, width);
-    [bottomView addSubview:pButton4];
-    
-    
+    for (int i = 1; i <= 4; i++) {
+        UIButton *pButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [pButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"tab%@",@(i)]] forState:UIControlStateNormal];
+        pButton.tag = i;
+        pButton.frame = CGRectMake(25*i+width*(i-1), (90-(width))/2, width, width);
+        [pButton addTarget:self action:@selector(bottomBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [bottomView addSubview:pButton];
+    }
+}
+
+- (void)bottomBtnClicked:(UIButton *)sender
+{
+    //底部按钮响应时间
 }
 
 #pragma mark - BankListDelegate

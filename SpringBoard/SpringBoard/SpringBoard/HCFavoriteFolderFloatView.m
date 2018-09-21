@@ -11,45 +11,50 @@
 #import "HCSpringBoardView.h"
 #import "HCFavoriteFolderMenuView.h"
 
-@implementation HCFavoriteFolderFloatView {
+@interface HCFavoriteFolderFloatView ()
+{
     UITextField *folderNameField;
     HCFavoriteFolderMenuView *folderMenuView;
 }
+@end
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
+@implementation HCFavoriteFolderFloatView
+
+- (instancetype)initWithModel:(HCFavoriteFolderModel *)model {
+    self = [super initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:215.0/255.0 green:215.0/255.0 blue:215.0/255.0 alpha:.8];
+        self.loveFolderModel = model;
+        self.backgroundColor =[UIColor colorWithWhite:0.9 alpha:0.5];
+        //高斯模糊
+        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        effectView.frame = self.bounds;
+        [self addSubview:effectView];
         
         folderNameField = [[UITextField alloc]initWithFrame:CGRectMake(20, 100, ScreenWidth-40, 40)];
         folderNameField.font = [UIFont systemFontOfSize:30];
         folderNameField.delegate = self;
-        folderNameField.clearButtonMode = UITextFieldViewModeAlways;
         folderNameField.textAlignment = NSTextAlignmentCenter;
         folderNameField.returnKeyType = UIReturnKeyDone;
+        folderNameField.textColor = [UIColor whiteColor];
+        folderNameField.text = self.loveFolderModel.folderName;
         [self addSubview:folderNameField];
         
-        [self addTarget:self action:@selector(hideFloatView:) forControlEvents:UIControlEventTouchUpInside];
+        folderMenuView = [[HCFavoriteFolderMenuView alloc]initWithFrame:
+                          CGRectMake(30, CGRectGetMaxY(folderNameField.frame)+20, ScreenWidth-60, ScreenWidth-60+25)
+                                                             menuModels:_loveFolderModel.iconModelsFolderArray
+                                                              menuIcons:_loveFolderModel.iconViewsFolderArray];
+        folderMenuView.folderMenuDelegate = self;
+        folderMenuView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
+        folderMenuView.layer.cornerRadius = 20;
+        folderMenuView.clipsToBounds = YES;
+        [self addSubview:folderMenuView];
+      
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self                     action:@selector(hideFloatView)];
+        [self addGestureRecognizer:tapGesture];
+        
     }
-    return self;
-}
 
-- (instancetype)initWithModel:(HCFavoriteFolderModel *)model {
-    self = [self initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
-    self.loveFolderModel = model;
-    
-    folderMenuView = [[HCFavoriteFolderMenuView alloc]initWithFrame:CGRectMake(20, CGRectGetMaxY(folderNameField.frame)+20, ScreenWidth-40, ScreenWidth)
-                                                       menuModels:_loveFolderModel.iconModelsFolderArray
-                                                        menuIcons:_loveFolderModel.iconViewsFolderArray];
-    folderMenuView.folderMenuDelegate = self;
-    folderMenuView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
-    folderMenuView.layer.cornerRadius = 20;
-    folderMenuView.clipsToBounds = YES;
-    [self addSubview:folderMenuView];
-    
-    folderNameField.text = self.loveFolderModel.folderName;
-    
     return self;
 }
 
@@ -69,7 +74,8 @@
     }
 }
 
-- (void)hideFloatView:(UIControl *)control {
+- (void)hideFloatView
+{
     if ([folderNameField.text isEqualToString:@""]) {
         UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"文件夹名字不能为空" delegate:nil cancelButtonTitle:@"返回" otherButtonTitles:nil, nil];
         [alertView show];
@@ -81,9 +87,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.alpha = 0;
         } completion:^(BOOL finished) {
-            if (control) {
-                [self removeFromSuperview];
-            }
+            [self removeFromSuperview];
         }];
     }
 }

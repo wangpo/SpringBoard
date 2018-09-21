@@ -10,14 +10,19 @@
 #import "HCFavoriteIconModel.h"
 #import "HCAssistant.h"
 
-static const CGFloat iconLabelHeight = 20.0f;
 static const CGFloat iconLabelFont = 13.0f;
 static const CGFloat littleIconSpace = 3;
-@implementation HCFavoriteFolderView{
+
+@interface HCFavoriteFolderView()
+{
     UILabel *menuLabel;
-    NSMutableArray *littleIconViewArray;
-    CALayer *folderLayer;
+   
 }
+@property (nonatomic, strong) NSMutableArray *littleIconViewArray;
+@property (nonatomic, strong)  CALayer *folderLayer;
+@end
+
+@implementation HCFavoriteFolderView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -25,55 +30,27 @@ static const CGFloat littleIconSpace = 3;
     if (self) {
         self.userInteractionEnabled = YES;
 
-        littleIconViewArray = [[NSMutableArray alloc]initWithCapacity:4];
-        //文件夹四格layer
-        CGFloat layerSize = 60;
-        folderLayer = [[CALayer alloc]init];
-        folderLayer.frame = CGRectMake((frame.size.width-layerSize)/2, 5, layerSize, layerSize);
-        folderLayer.borderWidth = .5f;
-        folderLayer.borderColor = [UIColor lightGrayColor].CGColor;
-        folderLayer.cornerRadius = 5;
-        [self.layer addSublayer:folderLayer];
+        self.littleIconViewArray = [[NSMutableArray alloc]initWithCapacity:4];
+        //文件夹layer
+        CGFloat layerSize = 50;
+        _folderLayer = [[CALayer alloc] init];
+        _folderLayer.frame = CGRectMake((frame.size.width-layerSize)/2, 10, layerSize, layerSize);
+        _folderLayer.borderWidth = .5f;
+        _folderLayer.borderColor = [UIColor lightGrayColor].CGColor;
+        _folderLayer.cornerRadius = 10;
+        _folderLayer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5].CGColor;
+        [self.layer addSublayer:_folderLayer];
         
-        CALayer *horRowLayer = [[CALayer alloc]init];
-        horRowLayer.frame = CGRectMake(0, CGRectGetHeight(folderLayer.frame)/2, CGRectGetWidth(folderLayer.frame), .5);
-        horRowLayer.borderWidth = .5f;
-        horRowLayer.borderColor = [UIColor lightGrayColor].CGColor;
-        horRowLayer.opacity = .5f;
-        [folderLayer addSublayer:horRowLayer];
-        
-        CALayer *verRowLayer = [[CALayer alloc]init];
-        verRowLayer.frame = CGRectMake(CGRectGetWidth(folderLayer.frame)/2, 0, .5, CGRectGetHeight(folderLayer.frame));
-        verRowLayer.borderWidth = .5f;
-        verRowLayer.borderColor = [UIColor lightGrayColor].CGColor;
-        verRowLayer.opacity = .5f;
-        [folderLayer addSublayer:verRowLayer];
-        
-        //四格图标视图
-        CGFloat iconWidthHeight = (CGRectGetWidth(folderLayer.frame)-littleIconSpace*4)/2;
-        
-        CGRect iconViewFrame01 = CGRectMake(littleIconSpace, littleIconSpace, iconWidthHeight, iconWidthHeight);
-        UIImageView *littleIconView01 = [[UIImageView alloc]initWithFrame:iconViewFrame01];
-        [folderLayer addSublayer:littleIconView01.layer];
-        
-        CGRect iconViewFrame02 = CGRectMake(CGRectGetMaxX(verRowLayer.frame)+littleIconSpace, littleIconSpace, iconWidthHeight, iconWidthHeight);
-        UIImageView *littleIconView02 = [[UIImageView alloc]initWithFrame:iconViewFrame02];
-        [folderLayer addSublayer:littleIconView02.layer];
-        
-        CGRect iconViewFrame03 = CGRectMake(littleIconSpace, CGRectGetMaxY(horRowLayer.frame)+littleIconSpace, iconWidthHeight, iconWidthHeight);
-        UIImageView *littleIconView03 = [[UIImageView alloc]initWithFrame:iconViewFrame03];
-        [folderLayer addSublayer:littleIconView03.layer];
-        
-        CGRect iconViewFrame04 = CGRectMake(CGRectGetMaxX(verRowLayer.frame)+littleIconSpace, CGRectGetMaxY(horRowLayer.frame)+littleIconSpace, iconWidthHeight, iconWidthHeight);
-        UIImageView *littleIconView04 = [[UIImageView alloc]initWithFrame:iconViewFrame04];
-        [folderLayer addSublayer:littleIconView04.layer];
-        
-        [littleIconViewArray addObject:littleIconView01];
-        [littleIconViewArray addObject:littleIconView02];
-        [littleIconViewArray addObject:littleIconView03];
-        [littleIconViewArray addObject:littleIconView04];
-        
-
+        //9宫格图标视图
+        CGFloat iconWidthHeight = (CGRectGetWidth(_folderLayer.frame)-littleIconSpace*6)/3;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                CGRect iconViewFrame = CGRectMake(littleIconSpace*2+(j*(littleIconSpace+iconWidthHeight)), littleIconSpace*2+(i*(littleIconSpace+iconWidthHeight)), iconWidthHeight, iconWidthHeight);
+                UIImageView *littleIconView = [[UIImageView alloc]initWithFrame:iconViewFrame];
+                [_folderLayer addSublayer:littleIconView.layer];
+                [self.littleIconViewArray addObject:littleIconView];
+            }
+        }
         menuLabel = [[UILabel alloc]initWithFrame:CGRectZero];
         menuLabel.frame =  CGRectMake(5, layerSize+10, CGRectGetWidth(frame)-10, 20);
         menuLabel.numberOfLines = 1;
@@ -84,9 +61,7 @@ static const CGFloat littleIconSpace = 3;
         [self addSubview:menuLabel];
         
         [self addTarget:self action:@selector(folderAction:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self
-                                                                                                 action:@selector(longGestureAction:)];
+        UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self        action:@selector(longGestureAction:)];
         [self addGestureRecognizer:longGesture];
     }
     return self;
@@ -94,7 +69,9 @@ static const CGFloat littleIconSpace = 3;
 
 - (instancetype)initWithFrame:(CGRect)frame model:(HCFavoriteFolderModel *)model {
     self = [self initWithFrame:frame];
-    self.loveFolderModel = model;
+    if (self) {
+        self.loveFolderModel = model;
+    }
     return self;
 }
 
@@ -106,7 +83,6 @@ static const CGFloat littleIconSpace = 3;
 - (void)setLoveFolderModel:(HCFavoriteFolderModel *)loveFolderModel {
     _loveFolderModel = loveFolderModel;
     menuLabel.text = _loveFolderModel.folderName;
-    
     [self updateLittleIconImage];
 }
 
@@ -116,34 +92,34 @@ static const CGFloat littleIconSpace = 3;
     }
     _isShowScaleFolderLayer = isShowScaleFolderLayer;
     //可加动画
+     __weak typeof(self) weakSelf = self;
     if (_isShowScaleFolderLayer) {
         [UIView animateWithDuration:0.6 animations:^{
-            [folderLayer setAffineTransform:CGAffineTransformMakeScale(1.2, 1.2)];
+            [weakSelf.folderLayer setAffineTransform:CGAffineTransformMakeScale(1.2, 1.2)];
         }];
-    }
-    else {
+    }else {
         [UIView animateWithDuration:0.6 animations:^{
-            [folderLayer setAffineTransform:CGAffineTransformIdentity];
+            [weakSelf.folderLayer setAffineTransform:CGAffineTransformIdentity];
         }];
     }
 }
 
 - (void)updateLittleIconImage {
-    [littleIconViewArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.littleIconViewArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         UIImageView *littleIconImageView = obj;
         littleIconImageView.image = nil;
     }];
     
     int count = 0;
-    if (_loveFolderModel.iconModelsFolderArray.count > 4) {
-        count = 4;
+    if (_loveFolderModel.iconModelsFolderArray.count > 9) {
+        count = 9;
     }
     else {
         count = (int)_loveFolderModel.iconModelsFolderArray.count;
     }
     
     for (int i = 0; i < count ; i++) {
-        UIImageView *littleIconImageView = littleIconViewArray[i];
+        UIImageView *littleIconImageView = self.littleIconViewArray[i];
         HCFavoriteIconModel *loveIconModel = _loveFolderModel.iconModelsFolderArray[i];
         littleIconImageView.image = [UIImage imageNamed:loveIconModel.image];
     }

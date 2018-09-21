@@ -11,10 +11,10 @@
 #import "HCFavoriteFolderView.h"
 #import "HCAssistant.h"
 
-@interface HCFavoriteFolderFloatView : UIControl <UITextFieldDelegate>
+@interface HCFavoriteFolderFloatView : UIView <UITextFieldDelegate>
 
-@property (nonatomic, assign) id myControllerDelegate;
-@property (nonatomic, assign) id mySpringBoardDelegate;
+@property (nonatomic, weak) id myControllerDelegate;
+@property (nonatomic, weak) id mySpringBoardDelegate;
 @property (nonatomic, strong) HCFavoriteFolderModel *loveFolderModel;
 @property (nonatomic, strong) HCFavoriteFolderView *loveFolderView;
 
@@ -22,6 +22,6 @@
 
 - (instancetype)initWithModel:(HCFavoriteFolderModel *)model;
 
-- (void)hideFloatView:(UIControl *)control;
+- (void)hideFloatView;
 
 @end

@@ -17,7 +17,7 @@
 #import "HCWebViewController.h"
 @interface HCSpringBoardView()
 {
-    NSMutableArray *allFrame;//几页图标的frame
+    
     
     CGPoint lastPoint;
     NSMutableArray *indexRectArray;//存放IndexRect
@@ -36,7 +36,7 @@
 @property (nonatomic, assign) NSInteger loveFromIndex;
 @property (nonatomic, assign) CGPoint previousWindowMovePoint;
 @property (nonatomic, strong) UIView *toLoveIconView;
-
+@property (nonatomic, strong) NSMutableArray *allFrame;//几页图标的frame
 @end
 
 const NSInteger drawIconTag = 222;
@@ -47,7 +47,7 @@ const NSInteger drawIconTag = 222;
     if (self) {
         self.userInteractionEnabled = YES;
         
-        allFrame = [[NSMutableArray alloc]init];
+        self.allFrame = [[NSMutableArray alloc]init];
         NSInteger rowOnePage = [self getOnePageRomByDevice];
         iconsOnePageFrameArray = [self getOnePageIconsFrameArrayWithRowNumber:rowOnePage];
         //单页icon数
@@ -57,7 +57,7 @@ const NSInteger drawIconTag = 222;
                                      andOnePageIcon:onePageSize];
         
         //根据有多少页，创建对应的frame，icon直接加到scrollView上。
-        allFrame = [self getAllPageIconsFrameArrayWithOnePageRect:iconsOnePageFrameArray
+        self.allFrame = [self getAllPageIconsFrameArrayWithOnePageRect:iconsOnePageFrameArray
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
@@ -90,7 +90,7 @@ const NSInteger drawIconTag = 222;
         //根据不同的数据模型创建对应的图标和文件夹
         _favoriteViewArray = [[NSMutableArray alloc]init];
         for (int i = 0; i < allPageSize; i++) {
-            CGRect loveIconRect = CGRectFromString(allFrame[i]);
+            CGRect loveIconRect = CGRectFromString(self.allFrame[i]);
             
             id model = models[i];
             if ([model isKindOfClass:[HCFavoriteFolderModel class]]) {
@@ -133,7 +133,7 @@ const NSInteger drawIconTag = 222;
 #pragma mark - HCFavoriteIconLongGestureDelegate
 - (void)longGestureStateBegin:(UILongPressGestureRecognizer *)gesture forLoveView:(HCFavoriteIconView *)loveView{
     CGPoint beginPoint = [gesture locationInView:loveView];
-    lastPoint = CGPointMake(beginPoint.x*1.5, beginPoint.y*1.5);
+    lastPoint = CGPointMake(beginPoint.x*1.1, beginPoint.y*1.1);
     //_isDraw 肯定是yes，进入编辑模式的回调在此回调之前
     CGPoint pointAtWindow = [gesture locationInView:AppWindow];
     _previousWindowMovePoint = pointAtWindow;
@@ -265,7 +265,7 @@ const NSInteger drawIconTag = 222;
                     folderModel.iconViewsFolderArray = [@[toView,fromView] mutableCopy];
                     folderModel.iconModelsFolderArray = [@[toModel,fromModel] mutableCopy];
                     
-                    CGRect loveFolderRect = CGRectFromString(allFrame[toIndex]);
+                    CGRect loveFolderRect = CGRectFromString(self.allFrame[toIndex]);
                     HCFavoriteFolderView *loveFolderView = [[HCFavoriteFolderView alloc]initWithFrame:loveFolderRect model:folderModel];
                     loveFolderView.loveFolderDelegate = self;
                     loveFolderView.loveFolderLongGestureDelegate = self;
@@ -331,7 +331,7 @@ const NSInteger drawIconTag = 222;
     loveFolderView.hidden = YES;
     
     CGPoint beginPoint = [gesture locationInView:loveFolderView];
-    lastPoint = CGPointMake(beginPoint.x*1.5, beginPoint.y*1.5);
+    lastPoint = CGPointMake(beginPoint.x*1.1, beginPoint.y*1.1);
     CGPoint pointAtWindow = [gesture locationInView:AppWindow];
     _previousWindowMovePoint = pointAtWindow;
 }
@@ -505,7 +505,7 @@ const NSInteger drawIconTag = 222;
                     folderModel.iconViewsFolderArray = [@[toView,fromView] mutableCopy];
                     folderModel.iconModelsFolderArray = [@[toModel,fromModel] mutableCopy];
                     
-                    CGRect loveFolderRect = CGRectFromString(allFrame[toIndex]);
+                    CGRect loveFolderRect = CGRectFromString(self.allFrame[toIndex]);
                     HCFavoriteFolderView *loveFolderView = [[HCFavoriteFolderView alloc]initWithFrame:loveFolderRect model:folderModel];
                     loveFolderView.loveFolderDelegate = self;
                     loveFolderView.loveFolderLongGestureDelegate = self;
@@ -563,7 +563,7 @@ const NSInteger drawIconTag = 222;
 #pragma mark - HCLoveFolderDelegate
 //进入文件夹
 - (void)openLoveFolderOfLoveFolderView:(HCFavoriteFolderView *)loveFolderView {
-    HCFavoriteFolderFloatView *folderFloatView = [[HCFavoriteFolderFloatView alloc]initWithModel:loveFolderView.loveFolderModel];
+    HCFavoriteFolderFloatView *folderFloatView = [[HCFavoriteFolderFloatView alloc] initWithModel:loveFolderView.loveFolderModel];
     folderFloatView.loveFolderView = loveFolderView;
     folderFloatView.loveMainModels = _favoriteModelArray;
     folderFloatView.myControllerDelegate = self.springBoardDelegate;
@@ -580,7 +580,7 @@ const NSInteger drawIconTag = 222;
     HCFavoriteFolderView *drawIcon = (HCFavoriteFolderView *)[self drawIconWithCurrentIcon:loveFolderView];
     
     [UIView animateWithDuration:0.3 animations:^{
-        drawIcon.transform = CGAffineTransformMakeScale(1.5, 1.5);
+        drawIcon.transform = CGAffineTransformMakeScale(1.1, 1.1);
         drawIcon.alpha = .8f;
     }];
     
@@ -590,38 +590,37 @@ const NSInteger drawIconTag = 222;
 }
 #pragma mark - HCFavoriteIconDelegate 普通图标的编辑模式，删除，下一页操作
 - (void)deleteIconOfLoveIconView:(HCFavoriteIconView *)iconView {
+    
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.3 animations:^{
         iconView.transform = CGAffineTransformMakeScale(0.1, 0.1);
     } completion:^(BOOL finished) {
         
-        [_favoriteModelArray removeObjectAtIndex:iconView.tag];
-        [_favoriteViewArray removeObjectAtIndex:iconView.tag];
+        [weakSelf.favoriteModelArray removeObjectAtIndex:iconView.tag];
+        [weakSelf.favoriteViewArray removeObjectAtIndex:iconView.tag];
         
-        [self deleteIconLayoutWithMenuIcons:_favoriteViewArray];
+        [self deleteIconLayoutWithMenuIcons:weakSelf.favoriteViewArray];
         [iconView removeFromSuperview];
         //这里是更新全部菜单的是否显示属性。
         [self updateIconModelDisplay:self.favoriteMainMenu nodeIndex:iconView.loveIconModel.nodeIndex];
         [self archiverIconModelsArray];
         [self archiverLoveMenuMainModel];
         
-        if (_isEdit) {
+        if (weakSelf.isEdit) {
             [self showEditButton];
         }
     }];
 }
 - (void)pushPageOfLoveIconView:(HCFavoriteIconView *)iconView {
     if (!_isEdit) {
-        
         HCWebViewController *webVC = [[HCWebViewController alloc] init];
         webVC.title = iconView.loveIconModel.name;
         webVC.url = @"http://www.baidu.com";
         AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [del.launcherController presentViewController:webVC animated:YES completion:nil];
-        
-        
     }
     else {
-        [self doneButtonAction:nil];
+        [self doneButtonAction];
     }
 }
 - (void)intoEditingModeOfLoveIconView:(HCFavoriteIconView *)iconView {
@@ -630,7 +629,7 @@ const NSInteger drawIconTag = 222;
     HCFavoriteIconView *drawIcon = (HCFavoriteIconView *)[self drawIconWithCurrentIcon:iconView];
     
     [UIView animateWithDuration:0.3 animations:^{
-        drawIcon.transform = CGAffineTransformMakeScale(1.5, 1.5);
+        drawIcon.transform = CGAffineTransformMakeScale(1.1, 1.1);
         drawIcon.alpha = .8f;
     }];
     
@@ -677,23 +676,13 @@ const NSInteger drawIconTag = 222;
         [menuItemView.layer addAnimation:rockAnimation forKey:@"rocking"];
     }
     
-    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
-        ViewController *controller = (ViewController *)_springBoardDelegate;
-        
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightButton.frame  = CGRectMake(0, 0, 30, 25);
-        [rightButton setTitleColor:[UIColor colorWithRed:0.02f green:0.45f blue:0.88f alpha:1.00f] forState:UIControlStateNormal];
-        rightButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
-        [rightButton setTitle:@"完成" forState:UIControlStateNormal];
-        [rightButton addTarget:self action:@selector(doneButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
-        controller.navigationItem.rightBarButtonItem = rightItem;
-    }
+
 }
 - (void)deleteIconLayoutWithMenuIcons:(NSMutableArray *)array {
+    __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:.5 animations:^{
         for (int i = 0; i < array.count; i++) {
-            CGRect rect = CGRectFromString(allFrame[i]);
+            CGRect rect = CGRectFromString(weakSelf.allFrame[i]);
             UIView *iconView = array[i];
             iconView.frame = rect;
         }
@@ -713,7 +702,8 @@ const NSInteger drawIconTag = 222;
     }
 }
 #pragma mark - doneButtonAction
-- (void)doneButtonAction:(id)sender {
+- (void)doneButtonAction
+{
     if (_isEdit) {
         [self archiverIconModelsArray];
         for (int i=0; i<[_favoriteViewArray count]; i++) {
@@ -801,7 +791,7 @@ const NSInteger drawIconTag = 222;
     
     for (int i = 0; i < _favoriteViewArray.count; i++) {
         UIView *obj = _favoriteViewArray[i];
-        obj.frame = CGRectFromString(allFrame[i]);
+        obj.frame = CGRectFromString(self.allFrame[i]);
         [loveScrollView addSubview:obj];
     }
     
@@ -818,7 +808,7 @@ const NSInteger drawIconTag = 222;
 - (void)updateAllFramesArray:(NSArray *)allIcons {
     pageCount = [self getPagesNumberWithAllIcon:allIcons.count
                                  andOnePageIcon:onePageSize];
-    allFrame = [self getAllPageIconsFrameArrayWithOnePageRect:iconsOnePageFrameArray
+    self.allFrame = [self getAllPageIconsFrameArrayWithOnePageRect:iconsOnePageFrameArray
                                                     pageCount:pageCount
                                                andOnePageIcon:onePageSize];
 }
@@ -827,7 +817,7 @@ const NSInteger drawIconTag = 222;
     for (int i = 0; i < _favoriteViewArray.count; i++) {
         UIView *iconView = _favoriteViewArray[i];
         iconView.tag = i;
-        iconView.frame = CGRectFromString(allFrame[i]);
+        iconView.frame = CGRectFromString(self.allFrame[i]);
     }
 }
 #pragma mark - 判断是那个toIndex

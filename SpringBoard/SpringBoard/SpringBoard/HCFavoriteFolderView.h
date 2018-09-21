@@ -4,7 +4,7 @@
 //
 //  Created by 刘海川 on 16/3/6.
 //  Copyright © 2016年 Haichuan Liu. All rights reserved.
-//
+//  文件夹图标
 
 #import <UIKit/UIKit.h>
 #import "HCFavoriteFolderModel.h"

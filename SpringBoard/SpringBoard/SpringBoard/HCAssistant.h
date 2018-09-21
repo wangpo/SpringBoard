@@ -41,10 +41,10 @@
 
 #define BFLStatusBarHeight      (IPhoneX ? 44 : 20)
 
-#define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width-1)/4
+#define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width)/4
 #define ICONIMG_HEIGHT ICONIMG_WIDTH
-#define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-40)/3
-#define ICONIMG_HEIGHT_Float ICONIMG_WIDTH_Float+5
+#define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-60)/3
+#define ICONIMG_HEIGHT_Float ICONIMG_WIDTH_Float
 
 #define ICONIMG_LEVEL 1
 #define ICONIMG_LEVEL_SPACE 0

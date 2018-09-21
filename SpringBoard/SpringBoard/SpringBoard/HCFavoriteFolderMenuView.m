@@ -36,11 +36,14 @@
     if (self) {
         _folderMenuModelArray = modelsArray;
         _folderMenuIconArray = iconsArray;
-        
-        self.userInteractionEnabled = YES;
         allFrame = [[NSMutableArray alloc]init];
+       
+        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        effectView.frame = self.bounds;
+        [self addSubview:effectView];
         
-        NSInteger rowOnePage = [self getOnePageRomByDevice];
+        NSInteger rowOnePage = 3;
         iconsOnePageFrameArray = [self getOnePageIconsFrameArrayWithRowNumber:rowOnePage];
         //单页icon数
         onePageSize = rowOnePage * 3;
@@ -53,7 +56,7 @@
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0,5, ScreenWidth-20, rowOnePage*(ICONIMG_HEIGHT_Float+0.5));
+        CGRect scrollRect = CGRectMake(0,5, ScreenWidth-60, rowOnePage*(ICONIMG_HEIGHT_Float));
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -64,16 +67,15 @@
         [self addSubview:loveScrollView];
         
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame), ScreenWidth-40, 20)];
+                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame), ScreenWidth-60, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
         [self addSubview: lovePageControl];
         
         pages = [[NSMutableArray alloc]init];
         for (int i = 0; i < pageCount; i++) {
-            UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width-20, CGRectGetHeight(loveScrollView.frame))];
+            UIView *page = [[UIView alloc]initWithFrame:CGRectMake(0, 0,ScreenWidth-60, CGRectGetHeight(loveScrollView.frame))];
             page.userInteractionEnabled = YES;
-//            [self addLineAtPageWithOnePageRow:rowOnePage andPageView:page];
             [pages addObject:page];
         }
         [self layoutWithPages:scrollRect];
@@ -221,12 +223,12 @@
             HCSpringBoardView *sb = floatView.mySpringBoardDelegate;
             
             if (sb.isEdit) {
-                [sb doneButtonAction:nil];
+                [sb doneButtonAction];
                 [self stopLittleIconAnimation];
                 self.isEdit = NO;
             }
             else {
-                [floatView hideFloatView:[[UIControl alloc] init]];
+                [floatView hideFloatView];
                 [sb pushPageOfLoveIconView:iconView];
             }
         }
@@ -311,7 +313,7 @@
                     _isDrawOutside = YES;
                     if (_folderMenuDelegate && [_folderMenuDelegate isKindOfClass:[HCFavoriteFolderFloatView class]]) {
                         HCFavoriteFolderFloatView *floatView = _folderMenuDelegate;
-                        [floatView hideFloatView:nil];
+                        [floatView hideFloatView];
                         //此时，在主页创建一个图标，添加到第一个。
                     }
                     
@@ -445,7 +447,7 @@
                 [floatView.mySpringBoardDelegate archiverIconModelsArray];
                 [floatView.mySpringBoardDelegate archiverLoveMenuMainModel];
                 //有值传入就会删除removeFromSuperView
-                [floatView hideFloatView:[[UIControl alloc] init]];
+                [floatView hideFloatView];
                 
                 [mySB updateMenuUIWithLoveIconArray];
             }
@@ -590,10 +592,7 @@
     }
     return pageCounts;
 }
-#pragma mark - 判断需要多少行高
-- (NSInteger)getOnePageRomByDevice {
-    return 3;
-}
+
 #pragma mark - 计算需要展示的icon的所有Frame
 - (NSMutableArray *)getAllPageIconsFrameArrayWithOnePageRect:(NSArray *)onePageArray
                                                    pageCount:(NSInteger)pageCounts
@@ -604,7 +603,7 @@
     for (NSInteger i = 0; i < pageCounts; i++) {
         for (NSInteger j = 0; j < onePage; j++) {
             CGRect iconRect = CGRectFromString(onePageArray[j]);
-            iconRect.origin.x += i * (ScreenWidth-20);//屏幕宽既是scrollview的宽
+            iconRect.origin.x += i * (ScreenWidth-60);//屏幕宽既是scrollview的宽
             NSString *iconRectString = NSStringFromCGRect(iconRect);
             
             [pagesFramesArray addObject:iconRectString];
@@ -628,7 +627,7 @@
     NSMutableArray *iconRectArray = [[NSMutableArray alloc]init];
     for (int i = 0; i < row; i++) {
         for (int j = 0;j < 3; j++) {
-            CGRect rect = CGRectMake(j*(ICONIMG_WIDTH_Float+ICONIMG_LEVEL_SPACE), i*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE), ICONIMG_WIDTH_Float, ICONIMG_HEIGHT_Float);
+            CGRect rect = CGRectMake(j*(ICONIMG_WIDTH_Float), i*(ICONIMG_HEIGHT_Float), ICONIMG_WIDTH_Float, ICONIMG_HEIGHT_Float);
             [iconRectArray addObject:NSStringFromCGRect(rect)];
         }
     }

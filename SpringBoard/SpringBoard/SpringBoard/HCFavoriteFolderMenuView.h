@@ -30,8 +30,7 @@
 
 @end
 
-@interface HCFavoriteFolderMenuView : UIView
-<
+@interface HCFavoriteFolderMenuView : UIView<
 UIScrollViewDelegate,
 HCFavoriteIconLongGestureDelegate,
 HCFavoriteIconDelegate

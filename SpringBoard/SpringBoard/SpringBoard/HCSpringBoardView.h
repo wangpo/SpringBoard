@@ -21,7 +21,6 @@
 
 extern const NSInteger drawIconTag;
 @interface HCSpringBoardView : UIView
-
 <
 UIScrollViewDelegate,
 HCFavoriteIconDelegate,
@@ -49,5 +48,5 @@ HCLoveFolderLongGestureDelegate
 - (void)updateIconModelDisplay:(HCFavoriteIconModel *)allModel nodeIndex:(NSString *)nodel;
 
 - (void)updateMenuUIWithLoveIconArray;
-- (void)doneButtonAction:(id)sender;
+- (void)doneButtonAction;
 @end
