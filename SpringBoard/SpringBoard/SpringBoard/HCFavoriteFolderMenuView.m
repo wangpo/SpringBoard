@@ -304,7 +304,7 @@
         
         //2以下的慢速过程中进入的判断，此时可能点已经进入到了文件夹的区域内。
         if (fingerSpeed < 2) {//是否合并
-            NSLog(@"menu view toindex:%ld",toIndex);
+    
             if (toIndex == -1) {
                 //图标拖到了外面
                 if (_isDrawOutside == NO) {

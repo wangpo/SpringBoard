@@ -33,16 +33,18 @@
     _titleLabel.text = self.title;
     [_navBarView addSubview:_titleLabel];
     
-    [self.view addSubview:self.webView];
-    self.webView.frame = CGRectMake(0, (IPhoneX ? 88 : 64), kScreenSize.width, kScreenSize.height -(IPhoneX ? 88 : 64) );
-    
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    closeBtn.frame = CGRectMake(kScreenSize.width - 60, 10, 60, 60);
+    closeBtn.frame = CGRectMake(kScreenSize.width - 60, (IPhoneX ? 44 : 20), 40, 40);
     [closeBtn setImage:[UIImage imageNamed:@"app_close"] forState:UIControlStateNormal];
     [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:closeBtn];
+    [_navBarView addSubview:closeBtn];
     
+    
+    [self.view addSubview:self.webView];
+    self.webView.frame = CGRectMake(0, (IPhoneX ? 88 : 64), kScreenSize.width, kScreenSize.height -(IPhoneX ? 88 : 64) );
+    
+   
     [self requestData];
 }
 
@@ -50,7 +52,6 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 - (UIWebView *)webView
 {

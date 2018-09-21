@@ -43,8 +43,7 @@
     [loveScrollView addSubview:nextView];
     
     loveScrollView.contentSize = CGSizeMake(ScreenWidth * 2, ScreenHeight);
-    
-    
+    [loveScrollView setContentOffset:CGPointMake(ScreenWidth, 0)];
     
 }
 

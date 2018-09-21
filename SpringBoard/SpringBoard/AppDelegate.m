@@ -33,8 +33,6 @@
     self.window.rootViewController = self.launcherController;
     [self.window makeKeyAndVisible];
     
-    
-    return YES;
     return YES;
 }
 

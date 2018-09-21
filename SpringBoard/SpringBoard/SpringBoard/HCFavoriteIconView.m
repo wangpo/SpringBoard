@@ -99,7 +99,6 @@ static const CGFloat iconLabelFont = 13.0f;
 - (void)setIsEditing:(BOOL)isEditing {
     _isEditing = isEditing;
     delButton.hidden = !_isEditing;
-    NSLog(@"____%d",delButton.hidden);
 }
 
 - (void)setIsShowFolderFlag:(BOOL)isShowFolderFlag {
@@ -129,20 +128,12 @@ static const CGFloat iconLabelFont = 13.0f;
     [menuButton setImage:[UIImage imageNamed:_loveIconModel.image] forState:UIControlStateNormal];
     [menuButton setImage:[UIImage imageNamed:_loveIconModel.imageSeleted] forState:UIControlStateHighlighted];
     menuLabel.text = _loveIconModel.name;
-    
-    newFlagView.hidden = !([_loveIconModel.name isEqualToString:@"添加"]);
+  
 }
 
 - (void)menuButtonAction:(UITapGestureRecognizer *)gesture {
-    if ([_loveIconModel.name isEqualToString:@"添加"]) {
-        if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(addIconOfLoveIconView:)]) {
-            [_favoriteIconDelegate addIconOfLoveIconView:self];
-        }
-    }
-    else {
-        if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(pushPageOfLoveIconView:)]) {
-            [_favoriteIconDelegate pushPageOfLoveIconView:self];
-        }
+    if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(pushPageOfLoveIconView:)]) {
+        [_favoriteIconDelegate pushPageOfLoveIconView:self];
     }
 }
 
@@ -157,13 +148,11 @@ static const CGFloat iconLabelFont = 13.0f;
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
         {
-            if (![_loveIconModel.name isEqualToString:@"添加"]) {
-                if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(intoEditingModeOfLoveIconView:)]) {
-                    [_favoriteIconDelegate intoEditingModeOfLoveIconView:self];
-                }
-                if (_favoriteIconLongGestureDelegate && [_favoriteIconLongGestureDelegate respondsToSelector:@selector(longGestureStateBegin:forLoveView:)]) {
-                    [_favoriteIconLongGestureDelegate longGestureStateBegin:gesture forLoveView:self];
-                }
+            if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(intoEditingModeOfLoveIconView:)]) {
+                [_favoriteIconDelegate intoEditingModeOfLoveIconView:self];
+            }
+            if (_favoriteIconLongGestureDelegate && [_favoriteIconLongGestureDelegate respondsToSelector:@selector(longGestureStateBegin:forLoveView:)]) {
+                [_favoriteIconLongGestureDelegate longGestureStateBegin:gesture forLoveView:self];
             }
         }
             break;

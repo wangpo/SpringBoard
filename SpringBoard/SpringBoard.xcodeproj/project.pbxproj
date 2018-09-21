@@ -28,6 +28,7 @@
 		CD5BED1F21533ABA004654DA /* HCPreviousPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED1E21533ABA004654DA /* HCPreviousPage.m */; };
 		CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED21215348FE004654DA /* HCWebViewController.m */; };
 		CD5BED2521539734004654DA /* HCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED2421539734004654DA /* HCRootViewController.m */; };
+		CD9BA79B215493D100FA572E /* HCCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9BA799215493D100FA572E /* HCCardTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +72,8 @@
 		CD5BED21215348FE004654DA /* HCWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCWebViewController.m; sourceTree = "<group>"; };
 		CD5BED2321539734004654DA /* HCRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCRootViewController.h; sourceTree = "<group>"; };
 		CD5BED2421539734004654DA /* HCRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCRootViewController.m; sourceTree = "<group>"; };
+		CD9BA798215493D100FA572E /* HCCardTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCCardTableViewCell.h; sourceTree = "<group>"; };
+		CD9BA799215493D100FA572E /* HCCardTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCCardTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +149,8 @@
 				CD23572421522EFE00EE647F /* HCSpringBoardView.m */,
 				CD5BED1D21533ABA004654DA /* HCPreviousPage.h */,
 				CD5BED1E21533ABA004654DA /* HCPreviousPage.m */,
+				CD9BA798215493D100FA572E /* HCCardTableViewCell.h */,
+				CD9BA799215493D100FA572E /* HCCardTableViewCell.m */,
 				CD23572D21522EFE00EE647F /* YYModel */,
 			);
 			path = SpringBoard;
@@ -245,6 +250,7 @@
 				CD23573B21522EFE00EE647F /* HCFavoriteFolderFloatView.m in Sources */,
 				CD23570D21522E8D00EE647F /* AppDelegate.m in Sources */,
 				CD23573E21522EFE00EE647F /* HCFavoriteFolderModel.m in Sources */,
+				CD9BA79B215493D100FA572E /* HCCardTableViewCell.m in Sources */,
 				CD23574421522EFE00EE647F /* HCFavoriteFolderView.m in Sources */,
 				CD5BED2521539734004654DA /* HCRootViewController.m in Sources */,
 				CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */,

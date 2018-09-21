@@ -72,7 +72,7 @@ const NSInteger drawIconTag = 222;
         [self addSubview:loveScrollView];
         
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+40, ScreenWidth, 20)];
+                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+35, ScreenWidth, 20)];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
         lovePageControl.backgroundColor = [UIColor clearColor];
@@ -159,7 +159,7 @@ const NSInteger drawIconTag = 222;
         NSInteger toIndex = [toIndexDict[@"toIndex"] integerValue];
         BOOL isFolder = [toIndexDict[@"isFolder"] boolValue];
 
-        if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+        if (toIndex != -1 && toIndex < (_favoriteViewArray.count) && fromIndex < (_favoriteViewArray.count)) {
             _toLoveIconView = _favoriteViewArray[toIndex];
             
             if (isFolder && toIndex != fromIndex) {
@@ -185,7 +185,7 @@ const NSInteger drawIconTag = 222;
                 //2以下的慢速过程中进入的判断，此时可能点已经进入到了文件夹的区域内。
                 //可以调整敏感度
                 if (fingerSpeed < 2) {//是否合并
-                    NSLog(@"toIndex:%ld",toIndex);
+                   
                     if (toIndex != fromIndex) {
                         //操作数据源
                         [_favoriteModelArray removeObjectAtIndex:fromIndex];
@@ -231,7 +231,7 @@ const NSInteger drawIconTag = 222;
         NSInteger fromIndex = _loveFromIndex;
         BOOL isFolder = [toIndexDict[@"isFolder"] boolValue];
         
-        if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+        if (toIndex != -1 && toIndex < (_favoriteViewArray.count) && fromIndex < (_favoriteViewArray.count)) {
             _toLoveIconView = _favoriteViewArray[toIndex];// ?
             if (isFolder && toIndex != fromIndex) {
                 NSLog(@"进行文件夹的合并");
@@ -355,7 +355,7 @@ const NSInteger drawIconTag = 222;
             NSDictionary *toIndexDict = [self toIndexWithPoint:scrollPoint];
             NSInteger toIndex = [toIndexDict[@"toIndex"] integerValue];
             
-            if (toIndex != -1 && toIndex != fromIndex && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+            if (toIndex != -1 && toIndex != fromIndex && toIndex < (_favoriteViewArray.count) && fromIndex < (_favoriteViewArray.count)) {
                 _toLoveIconView = _favoriteViewArray[toIndex];
                 
                 [_favoriteModelArray removeObjectAtIndex:fromIndex];
@@ -411,7 +411,7 @@ const NSInteger drawIconTag = 222;
     
     BOOL isFolder = [toIndexDict[@"isFolder"] boolValue];
     
-    if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+    if (toIndex != -1 && toIndex < (_favoriteViewArray.count) && fromIndex < (_favoriteViewArray.count)) {
         _toLoveIconView = _favoriteViewArray[toIndex];
         if (isFolder && toIndex != fromIndex) {
             if ([_toLoveIconView isKindOfClass:[HCFavoriteIconView class]]) {
@@ -475,7 +475,7 @@ const NSInteger drawIconTag = 222;
         NSInteger fromIndex = _loveFromIndex;
         BOOL isFolder = [toIndexDict[@"isFolder"] boolValue];
         
-        if (toIndex != -1 && toIndex < (_favoriteViewArray.count - 1) && fromIndex < (_favoriteViewArray.count - 1)) {
+        if (toIndex != -1 && toIndex < (_favoriteViewArray.count) && fromIndex < (_favoriteViewArray.count)) {
             _toLoveIconView = _favoriteViewArray[toIndex];
             if (isFolder && toIndex != fromIndex) {
                 
@@ -612,7 +612,6 @@ const NSInteger drawIconTag = 222;
 - (void)pushPageOfLoveIconView:(HCFavoriteIconView *)iconView {
     if (!_isEdit) {
         
-        
         HCWebViewController *webVC = [[HCWebViewController alloc] init];
         webVC.title = iconView.loveIconModel.name;
         webVC.url = @"http://www.baidu.com";
@@ -626,9 +625,7 @@ const NSInteger drawIconTag = 222;
     }
 }
 - (void)intoEditingModeOfLoveIconView:(HCFavoriteIconView *)iconView {
-    if ([iconView.loveIconModel.name isEqualToString:@"添加"]) {
-        return;
-    }
+    
     
     HCFavoriteIconView *drawIcon = (HCFavoriteIconView *)[self drawIconWithCurrentIcon:iconView];
     
@@ -664,7 +661,7 @@ const NSInteger drawIconTag = 222;
     rockAnimation.duration = 0.3;
     rockAnimation.removedOnCompletion = NO;
     
-    for (int i=0; i<[_favoriteViewArray count]-1; i++) {
+    for (int i=0; i<[_favoriteViewArray count]; i++) {
         UIView *menuItemView = [_favoriteViewArray objectAtIndex:i];
         //更新tag重要
         menuItemView.tag = i;
@@ -719,7 +716,7 @@ const NSInteger drawIconTag = 222;
 - (void)doneButtonAction:(id)sender {
     if (_isEdit) {
         [self archiverIconModelsArray];
-        for (int i=0; i<[_favoriteViewArray count]-1; i++) {
+        for (int i=0; i<[_favoriteViewArray count]; i++) {
             UIView *menuItemView = [_favoriteViewArray objectAtIndex:i];
             if ([menuItemView isKindOfClass:[HCFavoriteIconView class]]) {
                 HCFavoriteIconView *menuItem = (HCFavoriteIconView *)menuItemView;
@@ -841,7 +838,7 @@ const NSInteger drawIconTag = 222;
 - (NSDictionary *)toIndexWithPoint:(CGPoint)scrollPoint{
     //-1不判断增加的那个icon
     scrollPoint = CGPointMake(scrollPoint.x, scrollPoint.y);
-    for (int i = 0; i < indexRectArray.count-1; i++) {
+    for (int i = 0; i < indexRectArray.count; i++) {
         HCIndexRect *indexRect = indexRectArray[i];
         if (CGRectContainsPoint(indexRect.iconFolderRect, scrollPoint)) {
             return @{@"toIndex":@(indexRect.iconIndex),@"isFolder":@YES};
@@ -855,7 +852,7 @@ const NSInteger drawIconTag = 222;
 }
 - (NSInteger)toIndexChangeWithPoint:(CGPoint)scrollPoint{
     scrollPoint = CGPointMake(scrollPoint.x, scrollPoint.y);
-    for (int i = 0; i < indexRectArray.count-1; i++) {
+    for (int i = 0; i < indexRectArray.count; i++) {
         HCIndexRect *indexRect = indexRectArray[i];
         if (CGRectContainsPoint(indexRect.iconRect, scrollPoint)) {
             return indexRect.iconIndex;
@@ -865,7 +862,7 @@ const NSInteger drawIconTag = 222;
 }
 - (NSInteger)toIndexFolderWithPoint:(CGPoint)scrollPoint{
     scrollPoint = CGPointMake(scrollPoint.x, scrollPoint.y);
-    for (int i = 0; i < indexRectArray.count-1; i++) {
+    for (int i = 0; i < indexRectArray.count; i++) {
         HCIndexRect *indexRect = indexRectArray[i];
         if (CGRectContainsPoint(indexRect.iconFolderRect, scrollPoint)) {
             return indexRect.iconIndex;

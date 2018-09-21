@@ -10,6 +10,7 @@
 #import "HCAssistant.h"
 #import "HCWebViewController.h"
 #import "AppDelegate.h"
+#import "HCCardTableViewCell.h"
 @interface HCPreviousPage ()
 {
     NSArray *_dataSource;
@@ -31,15 +32,11 @@
     if (self) {
         
         _dataSource = @[
-                        @[
-                            @{@"title":@"公积金",@"image":@"医保",@"url":@"http://old.bjgjj.gov.cn"},
-                            @{@"title":@"社保",@"image":@"社保",@"url":@"http://m.bjrbj.gov.cn"},
-                         ],
-                        @[
-                            @{@"title":@"水费",@"image":@"水费",@"url":@"http://www.baidu.com"},
-                            @{@"title":@"电费",@"image":@"12345",@"url":@"http://www.baidu.com"},
-                            @{@"title":@"燃气费",@"image":@"燃气",@"url":@"http://www.baidu.com"},
-                         ]
+                        @{@"title":@"公积金",@"image":@"公积金",@"url":@"http://old.bjgjj.gov.cn",@"bg":@"bg1"},
+                        @{@"title":@"社保",@"image":@"社保",@"url":@"http://m.bjrbj.gov.cn",@"bg":@"bg2"},
+                        @{@"title":@"水费",@"image":@"水费",@"url":@"http://www.baidu.com",@"bg":@"bg3"},
+                        @{@"title":@"电费",@"image":@"24小时图书馆",@"url":@"http://www.baidu.com",@"bg":@"bg4"},
+                        @{@"title":@"燃气费",@"image":@"燃气",@"url":@"http://www.baidu.com",@"bg":@"bg5"},
                        ];
      
          self.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"bg"] stretchableImageWithLeftCapWidth:320 topCapHeight:568]];
@@ -51,24 +48,24 @@
         self.mTableView.tableHeaderView = [self tableHeaderView];
         self.mTableView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.mTableView];
-        self.mTableView.rowHeight = 44;
+        self.mTableView.rowHeight = 85;
     }
     return self;
 }
 
 - (UIView *)tableHeaderView
 {
-    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 150)];
+    UIView *tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 260)];
     tableHeaderView.backgroundColor = [UIColor clearColor];
     
     
     UIImageView *qrCodeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qrcode"]];
-    qrCodeImageView.frame = CGRectMake((kScreenSize.width-100)/2, 10, 100, 100);
+    qrCodeImageView.frame = CGRectMake((kScreenSize.width-150)/2, 60, 150, 150);
     [tableHeaderView addSubview:qrCodeImageView];
     
     
     UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.frame = CGRectMake((kScreenSize.width-100)/2, 115, 100, 30);
+    titleLabel.frame = CGRectMake(CGRectGetMinX(qrCodeImageView.frame), CGRectGetMaxY(qrCodeImageView.frame)+10, 150, 20);
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.font = [UIFont systemFontOfSize:15.0f];
@@ -80,48 +77,31 @@
     return tableHeaderView;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return _dataSource.count;
-}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray *sectionArray = _dataSource[section];
-    return sectionArray.count;
+    return _dataSource.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
+    HCCardTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellID"];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
+        cell = [[HCCardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
         cell.backgroundColor = [UIColor clearColor];
-        cell.selectionStyle =  UITableViewCellSelectionStyleNone;
+        
     }
     
-    
+    NSDictionary *dict = _dataSource[indexPath.row];
+    cell.titleLabel.text = [dict objectForKey:@"title"];
+    cell.logoImageView.image = [UIImage imageNamed:[dict objectForKey:@"image"]];
+    cell.backgroundImageView.image = [UIImage imageNamed:[dict objectForKey:@"bg"]];
 
-    
-    NSDictionary *dict = _dataSource[indexPath.section][indexPath.row];
-    cell.textLabel.text = [dict objectForKey:@"title"];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    
-    cell.imageView.image = [UIImage imageNamed:[dict objectForKey:@"image"]];
-    //2、调整大小
-    CGSize itemSize = CGSizeMake(35, 35);
-    UIGraphicsBeginImageContextWithOptions(itemSize, NO, UIScreen.mainScreen.scale);
-    CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-    [cell.imageView.image drawInRect:imageRect];
-    cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary *dict = _dataSource[indexPath.section][indexPath.row];
+    NSDictionary *dict = _dataSource[indexPath.row];
     HCWebViewController *webVC = [[HCWebViewController alloc] init];
     webVC.title = [dict objectForKey:@"title"];
     webVC.url = [dict objectForKey:@"url"];

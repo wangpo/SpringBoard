@@ -10,6 +10,5 @@
 #import "ViewController.h"
 
 @interface HCRootViewController : UIViewController
-
 @property (nonatomic, strong)  ViewController *nextViewController;
 @end

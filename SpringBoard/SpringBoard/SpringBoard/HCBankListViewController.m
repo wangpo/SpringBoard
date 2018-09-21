@@ -108,10 +108,7 @@
     if ([loveModel.type isEqualToString:kMenuList]||
         [loveModel.type isEqualToString:kMenuIcons]) {
         
-        HCBankListViewController *menuListViewController = [[HCBankListViewController alloc]initWithMainMenu:loveModel.itemList];
-        menuListViewController.allMenuModels = self.allMenuModels;
-        menuListViewController.bankListDelegate = self.bankListDelegate;
-        [[self navigationController]pushViewController:menuListViewController animated:YES];
+       
         
     }else if ([loveModel.type isEqualToString:kViewcontroller] || [loveModel.type isEqualToString:kWebNetwork]){
         if (!loveModel.display) {

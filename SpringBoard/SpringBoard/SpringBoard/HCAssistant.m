@@ -12,19 +12,17 @@
 
 + (void)initMainMenu;
 {
-    
-    
-    NSArray *iconItem = @[@"24小时图书馆",@"12345",@"不动产状况",@"车主服务",@"城市停车",@"电动车目录",@"电梯查询",@"电影娱乐",@"公积金",@"公园景区",@"惠民资金",@"机动车维修点",@"健康证查询",@"交警服务",@"交通出行",@"教育缴费",@"景点门票",@"看病就医",@"民生商品",@"农副商品",@"培训机构查询",@"平安管家",@"燃气",@"人事人才档案",@"三坊七巷",@"社保",@"社区服务",@"社区网点",@"失物招领",@"实时公交",@"市图书馆",@"水费",@"随手拍",@"台风路径",@"停车诱导",@"网上办事大厅",@"信用福州",@"信用商家",@"信用支付",@"信用租赁",@"药店支付",@"医保",@"医保药品目录",@"医疗网点查询",@"易办税",@"意见反馈",@"政民互动",@"职业健康查询"];
+    NSArray *iconItem = @[@"24小时图书馆",@"12345",@"不动产状况",@"车主服务",@"城市停车",@"电动车目录",@"电梯查询",@"电影娱乐",@"公积金",@"公园景区",@"惠民资金",@"机动车维修点",@"健康证查询",@"交警服务",@"交通出行",@"教育缴费",@"景点门票",@"看病就医",@"民生商品",@"全部",@"培训机构查询",@"平安管家",@"燃气",@"人事人才档案",@"三坊七巷",@"社保",@"社区服务",@"社区网点",@"失物招领",@"实时公交",@"市图书馆",@"水费",@"随手拍",@"台风路径",@"停车诱导",@"网上办事大厅",@"信用福州",@"信用商家",@"信用支付",@"信用租赁",@"药店支付",@"医保",@"医保药品目录",@"医疗网点查询",@"易办税",@"意见反馈",@"政民互动",@"职业健康查询"];
     
     NSMutableArray *items = [[NSMutableArray alloc] init];
     
     [iconItem enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
                               obj,kNodeName,
-                              obj, kImage,
-                              obj, kImageSeleted,
+                              obj,kImage,
+                              obj,kImageSeleted,
                               obj,kMenuListImage,
-                              [NSNumber numberWithUnsignedInt:idx], kSortNum,
+                              [NSNumber numberWithUnsignedInteger:idx], kSortNum,
                               [NSString stringWithFormat:@"%ld",idx],kNodeIndex,
                               kWebNetwork, kNodeType,
                               @"PreferentialMerchant",kActionId,

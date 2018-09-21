@@ -28,20 +28,20 @@
     // Do any additional setup after loading the view, typically from a nib.
    
     _navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
-    _navBarView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.2];
+    _navBarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
     [self.view addSubview:_navBarView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 40)];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.textColor = [UIColor whiteColor];
-    _titleLabel.font = [UIFont systemFontOfSize:16.0f];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.text =  @"公民";
     [_navBarView addSubview:_titleLabel];
     
     UIView *line = [[UIView alloc] init];
     line.backgroundColor = [UIColor whiteColor];
-    line.frame = CGRectMake(0, 0, 48, 1);
+    line.frame = CGRectMake(0, 0, 48, 3);
     line.center = CGPointMake(kScreenSize.width/2, CGRectGetMaxY(_titleLabel.frame));
     [_navBarView addSubview:line];
     
@@ -49,6 +49,13 @@
     button.frame = _titleLabel.frame;
     [button addTarget:self action:@selector(showCard:) forControlEvents:UIControlEventTouchUpInside];
     [_navBarView addSubview:button];
+    
+    
+    UIButton *appStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    appStoreButton.frame = CGRectMake(kScreenSize.width - 50,  (IPhoneX ? 44 : 20), 40, 40);
+    [appStoreButton setImage:[UIImage imageNamed:@"appStore"] forState:UIControlStateNormal];
+    [appStoreButton addTarget:self action:@selector(showAppStore:) forControlEvents:UIControlEventTouchUpInside];
+    [_navBarView addSubview:appStoreButton];
     
    
     
@@ -59,9 +66,6 @@
     _favoriteMainMenu = [HCFavoriteIconModel modelWithDictionary:mainMenuDict];
     [self displayMenu];
     
-    self.cardView.frame =  CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
-    self.cardView.alpha = 0;
-    [self.view addSubview:self.cardView];
 }
 
 - (UIImageView *)cardView
@@ -70,6 +74,14 @@
         _cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card"]];
     }
     return _cardView;
+}
+
+- (void)showAppStore:(UIButton *)sender
+{
+    HCBankListViewController *menuListViewController = [[HCBankListViewController alloc]initWithMainMenu:self.favoriteMainMenu.itemList];
+    menuListViewController.allMenuModels = _springBoard.favoriteModelArray;
+    menuListViewController.bankListDelegate = self;
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
 }
 
 - (void)showCard:(UIButton *)sender
@@ -106,29 +118,16 @@
     if (userDefaultsLoveMenu && userDefaultsLoveMenuArray) {
         NSData *modelsArrayData = [userDefaultsLoveMenu objectForKey:kUserDefaultLoveMenuKey];
         NSArray *modelsArray = [NSKeyedUnarchiver unarchiveObjectWithData:modelsArrayData];
-        NSLog(@"modelsArray:%@",modelsArray);
         _iconModelsArray = [modelsArray mutableCopy];
     }
     else {
         [self getDisplayIcon:_favoriteMainMenu];
-        HCFavoriteIconModel *addModel = [[HCFavoriteIconModel alloc]init];
-        addModel.name = @"添加";
-        addModel.image = @"tj";
-        addModel.imageSeleted = @"tj";
-        addModel.type = kViewcontroller;
-        addModel.nodeIndex = @"-1";
-        addModel.display = YES;
-        addModel.isReadOnly = YES;
-        addModel.targetController = @"";
-        
-        [_iconModelsArray addObject:addModel];
-        
+
         NSData *iconModelsArrayData = [NSKeyedArchiver archivedDataWithRootObject:_iconModelsArray];
         [userDefaultsLoveMenu setObject:iconModelsArrayData forKey:kUserDefaultLoveMenuKey];
         [userDefaultsLoveMenu synchronize];
     }
     
-    NSLog(@"displayMenu 显示数据：%@",_iconModelsArray);
     if ([self.view viewWithTag:90]) {
         [_springBoard removeFromSuperview];
     }
@@ -139,31 +138,38 @@
     _springBoard.springBoardDelegate = self;
     _springBoard.tag = SpringBoardTag;
     [self.view addSubview:_springBoard];
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 110, kScreenSize.width, 100)];
-    bottomView.backgroundColor  = [UIColor clearColor];
+    
+    self.cardView.frame =  CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
+    self.cardView.alpha = 0;
+    [self.view addSubview:self.cardView];
+    
+    //底部Tabbar
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 90, kScreenSize.width, 90)];
+    bottomView.backgroundColor  = [UIColor colorWithWhite:0.9 alpha:0.5];
     [self.view addSubview:bottomView];
     
-    CGFloat width  = (kScreenSize.width - 100)/ 4;
+    CGFloat width  = (kScreenSize.width - 125)/ 4;
     
     UIButton *pButton1 = [UIButton buttonWithType:UIButtonTypeCustom];
     [pButton1 setImage:[UIImage imageNamed:@"tab1"] forState:UIControlStateNormal];
-    pButton1.frame = CGRectMake(20, (100-(width))/2, width, width);
+    pButton1.frame = CGRectMake(25, (90-(width))/2, width, width);
     [bottomView addSubview:pButton1];
     
     UIButton *pButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
     [pButton2 setImage:[UIImage imageNamed:@"tab2"] forState:UIControlStateNormal];
-    pButton2.frame = CGRectMake(40+width, (100-(width))/2, width, width);
+    pButton2.frame = CGRectMake(50+width, (90-(width))/2, width, width);
     [bottomView addSubview:pButton2];
     
     UIButton *pButton3 = [UIButton buttonWithType:UIButtonTypeCustom];
     [pButton3 setImage:[UIImage imageNamed:@"tab3"] forState:UIControlStateNormal];
-    pButton3.frame = CGRectMake(60+width*2, (100-(width))/2, width, width);
+    pButton3.frame = CGRectMake(75+width*2, (90-(width))/2, width, width);
     [bottomView addSubview:pButton3];
     
     UIButton *pButton4 = [UIButton buttonWithType:UIButtonTypeCustom];
     [pButton4 setImage:[UIImage imageNamed:@"tab4"] forState:UIControlStateNormal];
-    pButton4.frame = CGRectMake(80+width *3,(100-(width))/2, width, width);
+    pButton4.frame = CGRectMake(100+width *3,(90-(width))/2, width, width);
     [bottomView addSubview:pButton4];
+    
     
 }
 
@@ -180,6 +186,8 @@
     //序列化
     [_springBoard archiverIconModelsArray];
     [_springBoard archiverLoveMenuMainModel];
+    
+    [self.view bringSubviewToFront:self.cardView];
 }
 
 //递归查找需要显示的图标
