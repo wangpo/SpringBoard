@@ -564,26 +564,6 @@
     return sqrt(x+y);
 }
 
-#pragma mark - 给pageView加横竖线
-- (void)addLineAtPageWithOnePageRow:(NSInteger)rowOnePage andPageView:(UIView *)page {
-    //横线
-    for (int i=0; i<rowOnePage+1; i++) {
-        UIView *line = nil;
-        line = [[UILabel alloc] initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE), ScreenWidth-20, 0.5)];
-        line.backgroundColor = [UIColor lightGrayColor];
-        line.alpha = 0.5;
-        [page addSubview:line];
-    }
-    //竖线
-    for (int i=0; i<3; i++) {
-        UIView *line = nil;
-        line = [[UIView alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH_Float+0.5)*i, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT_Float+ICONIMG_VERTICAL_SPACE))];
-        line.backgroundColor = [UIColor lightGrayColor];
-        line.alpha = 0.5;
-        [page addSubview:line];
-    }
-}
-
 #pragma mark - 判断需要几页
 - (NSInteger)getPagesNumberWithAllIcon:(NSInteger)count andOnePageIcon:(NSInteger)onePageCount{
     NSInteger pageCounts = count / onePageCount;

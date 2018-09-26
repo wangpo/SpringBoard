@@ -11,7 +11,8 @@
 #import "HCFavoriteIconModel.h"
 #import "NSObject+YYModel.h"
 #import "HCSpringBoardView.h"
-@interface ViewController : UIViewController <BankListDelegate,HCSpringBoardDelegate> {
+
+@interface ViewController : UIViewController <HCSpringBoardDelegate> {
     HCFavoriteIconModel *_favoriteMainMenu;
 }
 

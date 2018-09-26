@@ -34,9 +34,9 @@
         _dataSource = @[
                         @{@"title":@"公积金",@"image":@"公积金",@"url":@"http://old.bjgjj.gov.cn",@"bg":@"bg1"},
                         @{@"title":@"社保",@"image":@"社保",@"url":@"http://m.bjrbj.gov.cn",@"bg":@"bg2"},
-                        @{@"title":@"水费",@"image":@"水费",@"url":@"http://www.baidu.com",@"bg":@"bg3"},
-                        @{@"title":@"电费",@"image":@"24小时图书馆",@"url":@"http://www.baidu.com",@"bg":@"bg4"},
-                        @{@"title":@"燃气费",@"image":@"燃气",@"url":@"http://www.baidu.com",@"bg":@"bg5"},
+                        @{@"title":@"水费",@"image":@"水费",@"url":@"",@"bg":@"bg3"},
+                        @{@"title":@"电费",@"image":@"24小时图书馆",@"url":@"",@"bg":@"bg4"},
+                        @{@"title":@"燃气费",@"image":@"燃气",@"url":@"",@"bg":@"bg5"},
                        ];
      
          self.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"bg"] stretchableImageWithLeftCapWidth:320 topCapHeight:568]];
@@ -101,16 +101,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    //卡片跳转
     NSDictionary *dict = _dataSource[indexPath.row];
     HCWebViewController *webVC = [[HCWebViewController alloc] init];
     webVC.title = [dict objectForKey:@"title"];
     webVC.url = [dict objectForKey:@"url"];
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [del.launcherController presentViewController:webVC animated:YES completion:nil];
-    
-        
 }
-
-
-
 @end

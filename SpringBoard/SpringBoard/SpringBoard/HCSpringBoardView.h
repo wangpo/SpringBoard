@@ -13,7 +13,6 @@
 #import "HCFavoriteFolderView.h"
 #import "HCFavoriteIconModel.h"
 #import "HCFavoriteIconView.h"
-#import "HCBankListViewController.h"
 
 @protocol HCSpringBoardDelegate <NSObject>
 

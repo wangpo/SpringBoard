@@ -52,7 +52,7 @@ static const CGFloat littleIconSpace = 3;
             }
         }
         menuLabel = [[UILabel alloc]initWithFrame:CGRectZero];
-        menuLabel.frame =  CGRectMake(5, layerSize+10, CGRectGetWidth(frame)-10, 20);
+        menuLabel.frame =  CGRectMake(5, layerSize+15, CGRectGetWidth(frame)-10, 20);
         menuLabel.numberOfLines = 1;
         menuLabel.textAlignment = NSTextAlignmentCenter;
         menuLabel.font = [UIFont systemFontOfSize:iconLabelFont];

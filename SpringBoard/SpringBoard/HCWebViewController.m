@@ -13,6 +13,7 @@
 @property (nonatomic, strong) UIView * navBarView;
 @property (nonatomic, strong) UILabel *titleLabel;
 
+@property (nonatomic, strong) UIView *blankView;//空白视图
 @end
 
 @implementation HCWebViewController
@@ -40,17 +41,37 @@
     [closeBtn addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
     [_navBarView addSubview:closeBtn];
     
-    
     [self.view addSubview:self.webView];
     self.webView.frame = CGRectMake(0, (IPhoneX ? 88 : 64), kScreenSize.width, kScreenSize.height -(IPhoneX ? 88 : 64) );
-    
-   
-    [self requestData];
+    if ([self.url length] > 0) {
+         [self requestData];
+    }else{
+        self.blankView.frame = self.webView.bounds;
+        [self.webView addSubview:self.blankView];
+    }
 }
 
 - (void)close:(UIButton *)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (UIView *)blankView
+{
+    if (!_blankView) {
+        _blankView = [[UIView alloc] initWithFrame:CGRectZero];
+        _blankView.backgroundColor = [UIColor clearColor];
+        
+        UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, kScreenSize.width,20)];
+        contentLabel.backgroundColor = [UIColor clearColor];
+        contentLabel.textColor = [UIColor blackColor];
+        contentLabel.font = [UIFont systemFontOfSize:20.0f];
+        contentLabel.textAlignment = NSTextAlignmentCenter;
+        contentLabel.numberOfLines = 1;
+        contentLabel.text = [NSString stringWithFormat:@"%@",@"*正在建设中...*"];
+        [_blankView addSubview:contentLabel];
+    }
+    return _blankView;
 }
 
 - (UIWebView *)webView

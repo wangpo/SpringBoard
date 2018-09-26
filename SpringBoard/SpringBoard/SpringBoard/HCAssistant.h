@@ -38,7 +38,6 @@
 
 #define IPhoneX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1125, 2436), [[UIScreen mainScreen] currentMode].size) : NO)
 
-
 #define BFLStatusBarHeight      (IPhoneX ? 44 : 20)
 
 #define ICONIMG_WIDTH ([[UIScreen mainScreen] bounds].size.width)/4
@@ -46,10 +45,7 @@
 #define ICONIMG_WIDTH_Float ([[UIScreen mainScreen] bounds].size.width-60)/3
 #define ICONIMG_HEIGHT_Float ICONIMG_WIDTH_Float
 
-#define ICONIMG_LEVEL 1
-#define ICONIMG_LEVEL_SPACE 0
 #define ICONIMG_VERTICAL 30
-#define ICONIMG_VERTICAL_SPACE 0
 
 #pragma mark - 文件路径
 #define kMenuFileName @"menu.json"

@@ -10,7 +10,7 @@
 #import "HCAssistant.h"
 #import "ViewController.h"
 #import "HCRootViewController.h"
-
+#import "IFlyMSC/IFlyMSC.h"
 @interface AppDelegate ()
 
 @end
@@ -29,6 +29,10 @@
 
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor clearColor]} forState:UIControlStateNormal];
 
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"5ba9ead8"];
+    [IFlySpeechUtility createUtility:initString];
+    
+    
     self.launcherController = [[HCRootViewController alloc] init];
     self.window.rootViewController = self.launcherController;
     [self.window makeKeyAndVisible];

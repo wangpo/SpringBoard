@@ -8,17 +8,25 @@
 
 #import "ViewController.h"
 #import "HCAssistant.h"
+#import "HCWebViewController.h"
+#import "AppDelegate.h"
+#import "IFlyMSC/IFlyMSC.h"
+#import "ISRDataHelper.h"
+#import "NBWaveView.h"
 
-@interface ViewController () {
+@interface ViewController ()<IFlySpeechRecognizerDelegate>
     
-    NSMutableArray *_iconModelsArray;
-    
-    HCSpringBoardView *_springBoard;
-    
-}
+@property (nonatomic, strong) NSMutableArray *iconModelsArray;
+@property (nonatomic, strong) NSMutableArray *speechKeysArray;
+@property (nonatomic, strong) HCSpringBoardView *springBoard;
+@property (nonatomic, strong) UIImageView *cardView;
+@property (nonatomic, strong) UIView *bottomView;
+@property (nonatomic, strong) NSString*speechText;
+@property (nonatomic, strong) NBWaveView *waveView;
 
+//不带界面的识别对象
+@property (nonatomic, strong) IFlySpeechRecognizer *iFlySpeechRecognizer;
 
-@property (nonatomic, strong)UIImageView *cardView;
 @end
 
 @implementation ViewController
@@ -26,68 +34,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-   
-    _navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
-    _navBarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
-    [self.view addSubview:_navBarView];
-    //高斯模糊
-    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-    effectView.frame = _navBarView.bounds;
-    [_navBarView addSubview:effectView];
-    
-    
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 40)];
-    _titleLabel.backgroundColor = [UIColor clearColor];
-    _titleLabel.textColor = [UIColor whiteColor];
-    _titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.text =  @"公民";
-    [_navBarView addSubview:_titleLabel];
-    
-    UIView *line = [[UIView alloc] init];
-    line.backgroundColor = [UIColor whiteColor];
-    line.frame = CGRectMake(0, 0, 48, 3);
-    line.center = CGPointMake(kScreenSize.width/2, CGRectGetMaxY(_titleLabel.frame));
-    [_navBarView addSubview:line];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = _titleLabel.frame;
-    [button addTarget:self action:@selector(showCard:) forControlEvents:UIControlEventTouchUpInside];
-    [_navBarView addSubview:button];
-    
-    
-    UIButton *appStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    appStoreButton.frame = CGRectMake(kScreenSize.width - 50,  (IPhoneX ? 44 : 20), 40, 40);
-    [appStoreButton setImage:[UIImage imageNamed:@"appStore"] forState:UIControlStateNormal];
-    [appStoreButton addTarget:self action:@selector(showAppStore:) forControlEvents:UIControlEventTouchUpInside];
-    [_navBarView addSubview:appStoreButton];
-    
-   
-    
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"bg"] stretchableImageWithLeftCapWidth:320 topCapHeight:568]];
+    [self.view addSubview:self.navBarView];
     //获取序列化到本地的所有菜单
     NSDictionary *mainMenuDict = [[NSDictionary alloc]initWithContentsOfFile:DOCUMENT_FOLDER(kMenuFileName)];
     _favoriteMainMenu = [HCFavoriteIconModel modelWithDictionary:mainMenuDict];
     [self displayMenu];
     
 }
-
-- (UIImageView *)cardView
-{
-    if (!_cardView) {
-        _cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card"]];
-    }
-    return _cardView;
-}
-
+    
 - (void)showAppStore:(UIButton *)sender
 {
-    HCBankListViewController *menuListViewController = [[HCBankListViewController alloc]initWithMainMenu:self.favoriteMainMenu.itemList];
-    menuListViewController.allMenuModels = _springBoard.favoriteModelArray;
-    menuListViewController.bankListDelegate = self;
-    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
+    HCWebViewController *webVC = [[HCWebViewController alloc] init];
+    webVC.title = @"应用超市";
+    webVC.url = @"http://t200storemarket.zhengtoon.com/app/index.html#/";
+    AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [del.launcherController presentViewController:webVC animated:YES completion:nil];
 }
 
 - (void)showCard:(UIButton *)sender
@@ -134,65 +97,254 @@
         [userDefaultsLoveMenu synchronize];
     }
     
-    if ([self.view viewWithTag:90]) {
-        [_springBoard removeFromSuperview];
-    }
+    //汇总关键字
+    self.speechKeysArray = [NSMutableArray arrayWithCapacity:0];
+    [_iconModelsArray enumerateObjectsUsingBlock:^(HCFavoriteIconModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.speechKeysArray addObject:obj.name];
+    }];
     
     //根据数据显示菜单
-    CGRect sbRect = CGRectMake(0,  (IPhoneX ? 88 : 64), kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
-    _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
-    _springBoard.springBoardDelegate = self;
-    _springBoard.tag = SpringBoardTag;
-    [self.view addSubview:_springBoard];
-    
+    if ([self.view viewWithTag:SpringBoardTag]) {
+        [_springBoard removeFromSuperview];
+    }
+    [self.view addSubview:self.springBoard];
+
     self.cardView.frame =  CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
     self.cardView.alpha = 0;
     [self.view addSubview:self.cardView];
-    
     //底部Tabbar
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 90, kScreenSize.width, 90)];
-    bottomView.backgroundColor  = [UIColor colorWithWhite:0.9 alpha:0.5];
-    [self.view addSubview:bottomView];
+    [self.view addSubview:self.bottomView];
     
-    //高斯模糊
-    UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-    effectView.frame = bottomView.bounds;
-    [bottomView addSubview:effectView];
-
-    CGFloat width  = (kScreenSize.width - 125)/ 4;
-    for (int i = 1; i <= 4; i++) {
-        UIButton *pButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [pButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"tab%@",@(i)]] forState:UIControlStateNormal];
-        pButton.tag = i;
-        pButton.frame = CGRectMake(25*i+width*(i-1), (90-(width))/2, width, width);
-        [pButton addTarget:self action:@selector(bottomBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [bottomView addSubview:pButton];
-    }
 }
 
 - (void)bottomBtnClicked:(UIButton *)sender
 {
-    //底部按钮响应时间
+    
+   
+
 }
 
-#pragma mark - BankListDelegate
-//显示在列表页勾选图标
-- (void)addIconDone:(HCBankListViewController *)bankListViewController {
-    CGRect sbRect = CGRectMake(0, (IPhoneX ? 88 : 64), kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
-    
-    [_springBoard removeFromSuperview];
-    _springBoard = [[HCSpringBoardView alloc]initWithFrame:sbRect modes:_iconModelsArray];
-    _springBoard.springBoardDelegate = self;
-    _springBoard.tag = SpringBoardTag;
-    [self.view addSubview:_springBoard];
-    //序列化
-    [_springBoard archiverIconModelsArray];
-    [_springBoard archiverLoveMenuMainModel];
-    
-    [self.view bringSubviewToFront:self.cardView];
+-(IFlySpeechRecognizer *)iFlySpeechRecognizer
+{
+    if (!_iFlySpeechRecognizer) {
+        //创建语音识别对象
+        _iFlySpeechRecognizer = [IFlySpeechRecognizer sharedInstance];
+        _iFlySpeechRecognizer.delegate = self;
+        //设置识别参数
+        //设置为听写模式
+        [_iFlySpeechRecognizer setParameter: @"iat" forKey: [IFlySpeechConstant IFLY_DOMAIN]];
+        //asr_audio_path 是录音文件名，设置value为nil或者为空取消保存，默认保存目录在Library/cache下。
+        [_iFlySpeechRecognizer setParameter:@"iat.pcm" forKey:[IFlySpeechConstant ASR_AUDIO_PATH]];
+        //设置最长录音时间:60秒
+        [_iFlySpeechRecognizer setParameter:@"-1" forKey:[IFlySpeechConstant SPEECH_TIMEOUT]];
+        //设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
+        [_iFlySpeechRecognizer setParameter:@"3000" forKey:[IFlySpeechConstant VAD_EOS]];
+        //设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
+        [_iFlySpeechRecognizer setParameter:@"3000" forKey:[IFlySpeechConstant VAD_BOS]];
+        //网络等待时间
+        [_iFlySpeechRecognizer setParameter:@"2000" forKey:[IFlySpeechConstant NET_TIMEOUT]];
+        //设置采样率，推荐使用16K
+        [_iFlySpeechRecognizer setParameter:@"16000" forKey:[IFlySpeechConstant SAMPLE_RATE]];
+        //设置语言
+        [_iFlySpeechRecognizer setParameter:@"zh_cn" forKey:[IFlySpeechConstant LANGUAGE]];
+        //设置方言
+        [_iFlySpeechRecognizer setParameter:@"mandarin" forKey:[IFlySpeechConstant ACCENT]];//普通话
+        //设置是否返回标点符号
+        [_iFlySpeechRecognizer setParameter:@"0" forKey:[IFlySpeechConstant ASR_PTT]];
+        
+    }
+    return _iFlySpeechRecognizer;
 }
 
+- (void)startSpeechRecognizer:(UIButton *)sender
+{
+    NSLog(@"-----%@",NSStringFromSelector(_cmd));
+    self.speechText = @"";
+    [self.iFlySpeechRecognizer startListening];
+
+    if (!self.waveView.superview) {
+        self.waveView.frame = CGRectMake(0, kScreenSize.height - 200, kScreenSize.width, 10);
+        [self.view addSubview:self.waveView];
+    }
+   
+}
+
+- (void)stopSpeechRecognizer:(UIButton *)sender
+{
+    [self.iFlySpeechRecognizer stopListening];
+    [self.waveView removeFromSuperview];
+}
+
+#pragma mark - IFlySpeechRecognizerDelegate协议实现
+//识别结果返回代理
+- (void) onResults:(NSArray *) results isLast:(BOOL)isLast{
+    NSLog(@"-----%@",NSStringFromSelector(_cmd));
+    NSMutableString *resultString = [[NSMutableString alloc] init];
+    NSDictionary *dic = results[0];
+    
+    for (NSString *key in dic) {
+        [resultString appendFormat:@"%@",key];
+    }
+    
+    NSString * resultFromJson = [ISRDataHelper stringFromJson:resultString];
+    self.speechText = [NSString stringWithFormat:@"%@%@", self.speechText,resultFromJson];
+}
+
+
+
+//识别会话结束返回代理
+- (void)onCompleted: (IFlySpeechError *) error{
+    if (error.errorCode == 0 ) {
+        //识别完毕
+        if ([self.speechText containsString:@"打开"] || [self.speechText containsString:@"查询"]) {
+            NSString *keyword = [self hitAppNameBySpeechKeywords:self.speechText];
+            if (keyword) {
+                HCWebViewController *webVC = [[HCWebViewController alloc] init];
+                webVC.title = keyword;
+                AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                [del.launcherController presentViewController:webVC animated:YES completion:nil];
+            }
+        }
+    }
+    if (self.waveView.superview) {
+         [self.waveView removeFromSuperview];
+    }
+}
+
+//停止录音回调
+- (void) onEndOfSpeech{}
+//开始录音回调
+- (void) onBeginOfSpeech{}
+//会话取消回调
+- (void) onCancel{}
+
+//音量回调函数
+- (void) onVolumeChanged: (int)volume{
+    NSString * vol = [NSString stringWithFormat:@"音量：%d",volume];
+    
+}
+
+- (NSString *)hitAppNameBySpeechKeywords:(NSString *)speechText
+{
+    __block NSString *appName = nil;
+    [self.speechKeysArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([self.speechText containsString:obj]) {
+            *stop = YES;
+            appName = obj;
+        }
+    }];
+    return appName;
+}
+
+#pragma mark - Setter & Getter
+- (UIView *)navBarView
+{
+    if(!_navBarView){
+        _navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
+        _navBarView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.5];
+
+        //高斯模糊
+        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        effectView.frame = _navBarView.bounds;
+        [_navBarView addSubview:effectView];
+        
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 40)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.text =  @"公民";
+        [_navBarView addSubview:_titleLabel];
+        
+        UIView *line = [[UIView alloc] init];
+        line.backgroundColor = [UIColor whiteColor];
+        line.frame = CGRectMake(0, 0, 48, 3);
+        line.center = CGPointMake(kScreenSize.width/2, CGRectGetMaxY(_titleLabel.frame));
+        [_navBarView addSubview:line];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = _titleLabel.frame;
+        [button addTarget:self action:@selector(showCard:) forControlEvents:UIControlEventTouchUpInside];
+        [_navBarView addSubview:button];
+        
+        UIButton *appStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        appStoreButton.frame = CGRectMake(kScreenSize.width - 40,  (IPhoneX ? 44 : 20)+7, 30, 30);
+        [appStoreButton setImage:[UIImage imageNamed:@"appStore"] forState:UIControlStateNormal];
+        [appStoreButton addTarget:self action:@selector(showAppStore:) forControlEvents:UIControlEventTouchUpInside];
+        [_navBarView addSubview:appStoreButton];
+    }
+    return _navBarView;
+}
+    
+- (UIImageView *)cardView
+{
+    if (!_cardView) {
+        _cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card"]];
+    }
+    return _cardView;
+}
+
+- (HCSpringBoardView *)springBoard
+{
+    if(!_springBoard){
+        CGRect sbRect = CGRectMake(0,  (IPhoneX ? 88 : 64), kScreenSize.width, [self getOnePageRomByDevice]*(ICONIMG_HEIGHT+0.5)+40);
+        _springBoard = [[HCSpringBoardView alloc] initWithFrame:sbRect modes:_iconModelsArray];
+        _springBoard.springBoardDelegate = self;
+        _springBoard.tag = SpringBoardTag;
+    }
+    return _springBoard;
+}
+    
+- (UIView *)bottomView
+{
+    if(!_bottomView){
+        //底部Tabbar
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, kScreenSize.height - 90, kScreenSize.width, 90)];
+        _bottomView.backgroundColor  = [UIColor colorWithWhite:0.9 alpha:0.5];
+      
+        //高斯模糊
+        UIBlurEffect *effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        effectView.frame = _bottomView.bounds;
+        [_bottomView addSubview:effectView];
+        
+        CGFloat width  = (kScreenSize.width - 90)/ 5;
+        for (int i = 1; i <= 5; i++) {
+            UIButton *pButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [pButton setImage:[UIImage imageNamed:[NSString stringWithFormat:@"tab%@",@(i)]] forState:UIControlStateNormal];
+            pButton.tag = i;
+            pButton.frame = CGRectMake(15*i+width*(i-1), (90-(width))/2, width, width);
+            if (i == 3) {
+                //语音识别
+                [pButton addTarget:self action:@selector(startSpeechRecognizer:) forControlEvents:UIControlEventTouchDown];
+                 [pButton addTarget:self action:@selector(stopSpeechRecognizer:) forControlEvents:UIControlEventTouchUpInside];
+            }else {
+                [pButton addTarget:self action:@selector(bottomBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+            }
+            [_bottomView addSubview:pButton];
+        }
+    }
+    return _bottomView;
+}
+
+- (NBWaveView *)waveView
+{
+    if (!_waveView) {
+        _waveView = [NBWaveView waveViewWithConfig:^(NBWaveConfig *config) {
+            config.position = NBWavePositionTop;
+            config.bgColor = [UIColor clearColor];
+            config.isAnimation = YES;
+            config.waveSpeed = 0.1;
+            config.waveA = 15;
+            config.waveColor = [UIColor clearColor];
+        }];
+    }
+    return _waveView;
+}
+
+#pragma mark - 快捷方法
 //递归查找需要显示的图标
 - (void)getDisplayIcon:(HCFavoriteIconModel *)favoroteModel
 {

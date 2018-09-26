@@ -10,6 +10,6 @@
 
 @interface HCWebViewController : UIViewController
 
-@property (nonatomic, strong) NSString *url;
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic, copy) NSString *url;
+
 @end

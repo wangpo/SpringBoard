@@ -35,7 +35,7 @@ static const CGFloat iconLabelFont = 13.0f;
         [menuButton addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:menuButton];
         
-        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(menuButton.frame)+5.0/320.0*ScreenWidth, CGRectGetWidth(frame)-10, iconLabelHeight)];
+        menuLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, CGRectGetMaxY(menuButton.frame)+5.0, CGRectGetWidth(frame)-10, iconLabelHeight)];
         menuLabel.numberOfLines = 1;
         menuLabel.textAlignment = NSTextAlignmentCenter;
         menuLabel.font = [UIFont systemFontOfSize:iconLabelFont];
@@ -55,6 +55,7 @@ static const CGFloat iconLabelFont = 13.0f;
         UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self
               action:@selector(longGestureAction:)];
         [self addGestureRecognizer:longGesture];
+        
         [self addTarget:self action:@selector(menuButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         
         //文件夹layer
@@ -119,7 +120,7 @@ static const CGFloat iconLabelFont = 13.0f;
   
 }
 
-- (void)menuButtonAction:(UILongPressGestureRecognizer *)gesture {
+- (void)menuButtonAction:(id)sender {
     if (_favoriteIconDelegate && [_favoriteIconDelegate respondsToSelector:@selector(pushPageOfLoveIconView:)]) {
         [_favoriteIconDelegate pushPageOfLoveIconView:self];
     }

@@ -16,9 +16,6 @@
 - (void)pushPageOfLoveIconView:(HCFavoriteIconView *)iconView;
 - (void)intoEditingModeOfLoveIconView:(HCFavoriteIconView *)iconView;
 
-@optional
-- (void)addIconOfLoveIconView:(HCFavoriteIconView *)iconView;
-
 @end
 
 @protocol HCFavoriteIconLongGestureDelegate <NSObject>

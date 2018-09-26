@@ -9,7 +9,6 @@
 #import "HCSpringBoardView.h"
 #import "AppDelegate.h"
 #import "ViewController.h"
-#import "HCBankListViewController.h"
 #import "HCFavoriteFolderFloatView.h"
 #import "HCFavoriteFolderMenuView.h"
 #import "AppDelegate.h"
@@ -17,8 +16,6 @@
 #import "HCWebViewController.h"
 @interface HCSpringBoardView()
 {
-    
-    
     CGPoint lastPoint;
     NSMutableArray *indexRectArray;//存放IndexRect
     
@@ -61,7 +58,7 @@ const NSInteger drawIconTag = 222;
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
-        CGRect scrollRect = CGRectMake(0, 20, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_LEVEL_SPACE)+60);
+        CGRect scrollRect = CGRectMake(0, 20, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT)+60);
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -615,7 +612,6 @@ const NSInteger drawIconTag = 222;
     if (!_isEdit) {
         HCWebViewController *webVC = [[HCWebViewController alloc] init];
         webVC.title = iconView.loveIconModel.name;
-        webVC.url = @"http://www.baidu.com";
         AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
         [del.launcherController presentViewController:webVC animated:YES completion:nil];
     }
@@ -635,16 +631,6 @@ const NSInteger drawIconTag = 222;
     
     if (!_isEdit) {
         [self showEditButton];
-    }
-}
-- (void)addIconOfLoveIconView:(HCFavoriteIconView *)iconView {
-    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
-        ViewController *controller = (ViewController *)_springBoardDelegate;
-        
-        HCBankListViewController *menuListViewController = [[HCBankListViewController alloc]initWithMainMenu:controller.favoriteMainMenu.itemList];
-        menuListViewController.allMenuModels = _favoriteModelArray;
-        menuListViewController.bankListDelegate = controller;
-        [controller presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
     }
 }
 
@@ -933,25 +919,7 @@ const NSInteger drawIconTag = 222;
     
     }
 }
-#pragma mark - 给pageView加横竖线 破代码待优化
-- (void)addLineAtPageWithOnePageRow:(NSInteger)rowOnePage andPageView:(UIView *)page {
-    //横线
-    for (int i = 0 ; i < rowOnePage + 1; i++) {
-        UIView *line = nil;
-        line = [[UIView alloc]initWithFrame:CGRectMake(0, i*(ICONIMG_HEIGHT+ICONIMG_VERTICAL_SPACE), ScreenWidth, 0.5)];
-        line.backgroundColor = [UIColor lightGrayColor];
-        line.alpha = 0.5;
-        [page addSubview:line];
-    }
-    //竖线
-    for (int i = 0 ; i < 3; i++) {
-        UILabel *line = nil;
-        line = [[UILabel alloc] initWithFrame:CGRectMake((ICONIMG_WIDTH+0.5)*i, 0.5, 0.5, rowOnePage*(ICONIMG_HEIGHT+ICONIMG_VERTICAL))];
-        line.backgroundColor = [UIColor lightGrayColor];
-        line.alpha = 0.5;
-        [page addSubview:line];
-    }
-}
+
 #pragma mark - 计算需要展示的icon的所有Frame
 - (NSMutableArray *)getAllPageIconsFrameArrayWithOnePageRect:(NSArray *)onePageArray
                                                    pageCount:(NSInteger)pageCounts
