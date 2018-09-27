@@ -38,12 +38,11 @@
 		CD23574421522EFE00EE647F /* HCFavoriteFolderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573621522EFE00EE647F /* HCFavoriteFolderView.m */; };
 		CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573921522EFE00EE647F /* HCBankListViewController.m */; };
 		CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573A21522EFE00EE647F /* HCFavoriteIconView.m */; };
+		CD4C9ECA215C6FF300DDA9E0 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C9EC9215C6FF300DDA9E0 /* Bugly.framework */; };
+		CD4C9ECC215C701F00DDA9E0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C9ECB215C701F00DDA9E0 /* Security.framework */; };
 		CD5BED1F21533ABA004654DA /* HCPreviousPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED1E21533ABA004654DA /* HCPreviousPage.m */; };
 		CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED21215348FE004654DA /* HCWebViewController.m */; };
 		CD5BED2521539734004654DA /* HCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED2421539734004654DA /* HCRootViewController.m */; };
-		CD613C07215B656C00165BB0 /* NBWaveConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C03215B656C00165BB0 /* NBWaveConfig.m */; };
-		CD613C08215B656C00165BB0 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C04215B656C00165BB0 /* UIView+Extension.m */; };
-		CD613C09215B656C00165BB0 /* NBWaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C06215B656C00165BB0 /* NBWaveView.m */; };
 		CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */; };
 		CD613C12215B8F4E00165BB0 /* Waver.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C0E215B8F4E00165BB0 /* Waver.m */; };
 		CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CD64014C215B217900E387BF /* ISRDataHelper.m */; };
@@ -100,18 +99,14 @@
 		CD23573821522EFE00EE647F /* HCFavoriteFolderMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCFavoriteFolderMenuView.h; sourceTree = "<group>"; };
 		CD23573921522EFE00EE647F /* HCBankListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCBankListViewController.m; sourceTree = "<group>"; };
 		CD23573A21522EFE00EE647F /* HCFavoriteIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconView.m; sourceTree = "<group>"; };
+		CD4C9EC9215C6FF300DDA9E0 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
+		CD4C9ECB215C701F00DDA9E0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CD5BED1D21533ABA004654DA /* HCPreviousPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPreviousPage.h; sourceTree = "<group>"; };
 		CD5BED1E21533ABA004654DA /* HCPreviousPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPreviousPage.m; sourceTree = "<group>"; };
 		CD5BED20215348FE004654DA /* HCWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCWebViewController.h; sourceTree = "<group>"; };
 		CD5BED21215348FE004654DA /* HCWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCWebViewController.m; sourceTree = "<group>"; };
 		CD5BED2321539734004654DA /* HCRootViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCRootViewController.h; sourceTree = "<group>"; };
 		CD5BED2421539734004654DA /* HCRootViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCRootViewController.m; sourceTree = "<group>"; };
-		CD613C01215B656C00165BB0 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
-		CD613C02215B656C00165BB0 /* NBWaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaveView.h; sourceTree = "<group>"; };
-		CD613C03215B656C00165BB0 /* NBWaveConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBWaveConfig.m; sourceTree = "<group>"; };
-		CD613C04215B656C00165BB0 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
-		CD613C05215B656C00165BB0 /* NBWaveConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaveConfig.h; sourceTree = "<group>"; };
-		CD613C06215B656C00165BB0 /* NBWaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBWaveView.m; sourceTree = "<group>"; };
 		CD613C0A215B806900165BB0 /* HCPrivacyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPrivacyViewController.h; sourceTree = "<group>"; };
 		CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPrivacyViewController.m; sourceTree = "<group>"; };
 		CD613C0E215B8F4E00165BB0 /* Waver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waver.m; sourceTree = "<group>"; };
@@ -127,6 +122,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD4C9ECC215C701F00DDA9E0 /* Security.framework in Frameworks */,
+				CD4C9ECA215C6FF300DDA9E0 /* Bugly.framework in Frameworks */,
 				CD146B94215A404900C72F89 /* iflyMSC.framework in Frameworks */,
 				CD146B90215A290700C72F89 /* CoreGraphics.framework in Frameworks */,
 				CD146B8E215A290100C72F89 /* Foundation.framework in Frameworks */,
@@ -156,6 +153,8 @@
 		CD146B76215A287E00C72F89 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD4C9ECB215C701F00DDA9E0 /* Security.framework */,
+				CD4C9EC9215C6FF300DDA9E0 /* Bugly.framework */,
 				CD146B93215A404900C72F89 /* iflyMSC.framework */,
 				CD146B8F215A290600C72F89 /* CoreGraphics.framework */,
 				CD146B8D215A290100C72F89 /* Foundation.framework */,
@@ -195,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				CD613C0D215B8F4E00165BB0 /* WaverFile */,
-				CD613C00215B656C00165BB0 /* NBWave */,
 				CD146B73215A0A1900C72F89 /* SSLCers */,
 				CD23572121522EFE00EE647F /* SpringBoard */,
 				CD23570B21522E8D00EE647F /* AppDelegate.h */,
@@ -260,19 +258,6 @@
 				CD23573121522EFE00EE647F /* NSObject+YYModel.h */,
 			);
 			path = YYModel;
-			sourceTree = "<group>";
-		};
-		CD613C00215B656C00165BB0 /* NBWave */ = {
-			isa = PBXGroup;
-			children = (
-				CD613C01215B656C00165BB0 /* UIView+Extension.h */,
-				CD613C02215B656C00165BB0 /* NBWaveView.h */,
-				CD613C03215B656C00165BB0 /* NBWaveConfig.m */,
-				CD613C04215B656C00165BB0 /* UIView+Extension.m */,
-				CD613C05215B656C00165BB0 /* NBWaveConfig.h */,
-				CD613C06215B656C00165BB0 /* NBWaveView.m */,
-			);
-			path = NBWave;
 			sourceTree = "<group>";
 		};
 		CD613C0D215B8F4E00165BB0 /* WaverFile */ = {
@@ -356,10 +341,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD613C12215B8F4E00165BB0 /* Waver.m in Sources */,
-				CD613C09215B656C00165BB0 /* NBWaveView.m in Sources */,
 				CD23571021522E8D00EE647F /* ViewController.m in Sources */,
 				CD23574221522EFE00EE647F /* YYClassInfo.m in Sources */,
-				CD613C08215B656C00165BB0 /* UIView+Extension.m in Sources */,
 				CD5BED1F21533ABA004654DA /* HCPreviousPage.m in Sources */,
 				CD23574121522EFE00EE647F /* NSObject+YYModel.m in Sources */,
 				CD23573D21522EFE00EE647F /* HCIndexRect.m in Sources */,
@@ -377,7 +360,6 @@
 				CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */,
 				CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */,
 				CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */,
-				CD613C07215B656C00165BB0 /* NBWaveConfig.m in Sources */,
 				CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */,
 				CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */,
 			);
@@ -519,13 +501,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KY588L6S9Y;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = TLWP697Z5D;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SpringBoard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -533,10 +516,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wangpo.springBoard1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.systoon.enterprise.springBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "ab5db5fa-77b0-473b-9ca6-70fceb4318e7";
+				PROVISIONING_PROFILE_SPECIFIER = SpringBoardEnterpriseProfile;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 armv7";
 			};
@@ -546,13 +529,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KY588L6S9Y;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = TLWP697Z5D;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/lib",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SpringBoard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -560,10 +544,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.wangpo.springBoard1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.systoon.enterprise.springBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "ab5db5fa-77b0-473b-9ca6-70fceb4318e7";
+				PROVISIONING_PROFILE_SPECIFIER = SpringBoardEnterpriseProfile;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "arm64 armv7";
 			};

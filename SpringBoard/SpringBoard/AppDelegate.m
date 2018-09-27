@@ -8,9 +8,9 @@
 
 #import "AppDelegate.h"
 #import "HCAssistant.h"
-#import "ViewController.h"
-#import "HCRootViewController.h"
 #import "IFlyMSC/IFlyMSC.h"
+#import <Bugly/Bugly.h>
+
 @interface AppDelegate ()
 
 @end
@@ -20,6 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+   
+    [Bugly startWithAppId:@"1bf8c3df0d"];
+    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"5ba9ead8"];
+    [IFlySpeechUtility createUtility:initString];
+    
     //初始化数据
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     if (![ud boolForKey:kIsFirst]) {
@@ -29,8 +34,7 @@
 
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor clearColor]} forState:UIControlStateNormal];
 
-    NSString *initString = [[NSString alloc] initWithFormat:@"appid=%@", @"5ba9ead8"];
-    [IFlySpeechUtility createUtility:initString];
+   
     
     
     self.launcherController = [[HCRootViewController alloc] init];

@@ -9,7 +9,6 @@
 #import "HCRootViewController.h"
 #import "HCAssistant.h"
 #import "HCPreviousPage.h"
-#import "ViewController.h"
 
 @interface HCRootViewController ()<UIScrollViewDelegate>
 {
