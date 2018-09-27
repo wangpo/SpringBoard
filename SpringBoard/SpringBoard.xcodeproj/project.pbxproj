@@ -44,6 +44,8 @@
 		CD613C07215B656C00165BB0 /* NBWaveConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C03215B656C00165BB0 /* NBWaveConfig.m */; };
 		CD613C08215B656C00165BB0 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C04215B656C00165BB0 /* UIView+Extension.m */; };
 		CD613C09215B656C00165BB0 /* NBWaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C06215B656C00165BB0 /* NBWaveView.m */; };
+		CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */; };
+		CD613C12215B8F4E00165BB0 /* Waver.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C0E215B8F4E00165BB0 /* Waver.m */; };
 		CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CD64014C215B217900E387BF /* ISRDataHelper.m */; };
 		CD9BA79B215493D100FA572E /* HCCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9BA799215493D100FA572E /* HCCardTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -110,6 +112,10 @@
 		CD613C04215B656C00165BB0 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		CD613C05215B656C00165BB0 /* NBWaveConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NBWaveConfig.h; sourceTree = "<group>"; };
 		CD613C06215B656C00165BB0 /* NBWaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NBWaveView.m; sourceTree = "<group>"; };
+		CD613C0A215B806900165BB0 /* HCPrivacyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPrivacyViewController.h; sourceTree = "<group>"; };
+		CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPrivacyViewController.m; sourceTree = "<group>"; };
+		CD613C0E215B8F4E00165BB0 /* Waver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waver.m; sourceTree = "<group>"; };
+		CD613C11215B8F4E00165BB0 /* Waver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waver.h; sourceTree = "<group>"; };
 		CD64014B215B217900E387BF /* ISRDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISRDataHelper.h; sourceTree = "<group>"; };
 		CD64014C215B217900E387BF /* ISRDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISRDataHelper.m; sourceTree = "<group>"; };
 		CD9BA798215493D100FA572E /* HCCardTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCCardTableViewCell.h; sourceTree = "<group>"; };
@@ -188,6 +194,7 @@
 		CD23570A21522E8D00EE647F /* SpringBoard */ = {
 			isa = PBXGroup;
 			children = (
+				CD613C0D215B8F4E00165BB0 /* WaverFile */,
 				CD613C00215B656C00165BB0 /* NBWave */,
 				CD146B73215A0A1900C72F89 /* SSLCers */,
 				CD23572121522EFE00EE647F /* SpringBoard */,
@@ -197,6 +204,8 @@
 				CD5BED2421539734004654DA /* HCRootViewController.m */,
 				CD5BED20215348FE004654DA /* HCWebViewController.h */,
 				CD5BED21215348FE004654DA /* HCWebViewController.m */,
+				CD613C0A215B806900165BB0 /* HCPrivacyViewController.h */,
+				CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */,
 				CD23570E21522E8D00EE647F /* ViewController.h */,
 				CD23570F21522E8D00EE647F /* ViewController.m */,
 				CD64014B215B217900E387BF /* ISRDataHelper.h */,
@@ -264,6 +273,15 @@
 				CD613C06215B656C00165BB0 /* NBWaveView.m */,
 			);
 			path = NBWave;
+			sourceTree = "<group>";
+		};
+		CD613C0D215B8F4E00165BB0 /* WaverFile */ = {
+			isa = PBXGroup;
+			children = (
+				CD613C0E215B8F4E00165BB0 /* Waver.m */,
+				CD613C11215B8F4E00165BB0 /* Waver.h */,
+			);
+			path = WaverFile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD613C12215B8F4E00165BB0 /* Waver.m in Sources */,
 				CD613C09215B656C00165BB0 /* NBWaveView.m in Sources */,
 				CD23571021522E8D00EE647F /* ViewController.m in Sources */,
 				CD23574221522EFE00EE647F /* YYClassInfo.m in Sources */,
@@ -357,6 +376,7 @@
 				CD5BED2521539734004654DA /* HCRootViewController.m in Sources */,
 				CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */,
 				CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */,
+				CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */,
 				CD613C07215B656C00165BB0 /* NBWaveConfig.m in Sources */,
 				CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */,
 				CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */,
@@ -505,7 +525,6 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)/lib",
 					"$(PROJECT_DIR)/lib",
 				);
 				INFOPLIST_FILE = SpringBoard/Info.plist;

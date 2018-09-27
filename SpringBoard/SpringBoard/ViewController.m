@@ -12,7 +12,9 @@
 #import "AppDelegate.h"
 #import "IFlyMSC/IFlyMSC.h"
 #import "ISRDataHelper.h"
-#import "NBWaveView.h"
+
+#import "HCBankListViewController.h"
+#import "Waver.h"
 
 @interface ViewController ()<IFlySpeechRecognizerDelegate>
     
@@ -22,8 +24,7 @@
 @property (nonatomic, strong) UIImageView *cardView;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) NSString*speechText;
-@property (nonatomic, strong) NBWaveView *waveView;
-
+@property (nonatomic, strong) Waver *waveView;
 //不带界面的识别对象
 @property (nonatomic, strong) IFlySpeechRecognizer *iFlySpeechRecognizer;
 
@@ -53,20 +54,29 @@
     [del.launcherController presentViewController:webVC animated:YES completion:nil];
 }
 
-- (void)showCard:(UIButton *)sender
+- (void)eCardBtnAction:(UIButton *)sender
 {
     if (self.cardView.alpha == 0) {
-        [UIView animateWithDuration:0.3 animations:^{
-            self.cardView.alpha = 1;
-            self.cardView.frame = CGRectMake(0,  (IPhoneX ? 88 : 64), kScreenSize.width, 150);
-        }];
+        [self eCardShow];
     }else if(self.cardView.alpha == 1){
-        [UIView animateWithDuration:0.3 animations:^{
-            self.cardView.alpha = 0;
-            self.cardView.frame = CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 0);
-        }];
+        [self eCardHidden];
     }
-   
+}
+
+- (void)eCardShow
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.cardView.alpha = 1;
+        self.cardView.frame = CGRectMake(0,  (IPhoneX ? 88 : 64), kScreenSize.width, 150);
+    }];
+}
+
+- (void)eCardHidden
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.cardView.alpha = 0;
+        self.cardView.frame = CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 0);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,7 +109,7 @@
     
     //汇总关键字
     self.speechKeysArray = [NSMutableArray arrayWithCapacity:0];
-    [_iconModelsArray enumerateObjectsUsingBlock:^(HCFavoriteIconModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.favoriteMainMenu.itemList enumerateObjectsUsingBlock:^(HCFavoriteIconModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.speechKeysArray addObject:obj.name];
     }];
     
@@ -119,8 +129,11 @@
 
 - (void)bottomBtnClicked:(UIButton *)sender
 {
-    
-   
+    if (sender.tag == 5) {
+        HCBankListViewController *menuListViewController = [[HCBankListViewController alloc] initWithMainMenu:self.favoriteMainMenu.itemList];
+        AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        [del.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
+    }
 
 }
 
@@ -163,7 +176,7 @@
     [self.iFlySpeechRecognizer startListening];
 
     if (!self.waveView.superview) {
-        self.waveView.frame = CGRectMake(0, kScreenSize.height - 200, kScreenSize.width, 10);
+        self.waveView.frame = CGRectMake(0, kScreenSize.height - 180, kScreenSize.width, 60);
         [self.view addSubview:self.waveView];
     }
    
@@ -266,7 +279,7 @@
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = _titleLabel.frame;
-        [button addTarget:self action:@selector(showCard:) forControlEvents:UIControlEventTouchUpInside];
+        [button addTarget:self action:@selector(eCardBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [_navBarView addSubview:button];
         
         UIButton *appStoreButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -329,20 +342,23 @@
     return _bottomView;
 }
 
-- (NBWaveView *)waveView
+- (Waver *)waveView
 {
     if (!_waveView) {
-        _waveView = [NBWaveView waveViewWithConfig:^(NBWaveConfig *config) {
-            config.position = NBWavePositionTop;
-            config.bgColor = [UIColor clearColor];
-            config.isAnimation = YES;
-            config.waveSpeed = 0.1;
-            config.waveA = 15;
-            config.waveColor = [UIColor clearColor];
-        }];
+        //语音输入动画
+        _waveView = [[Waver alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 100.0)];
+        _waveView.waverLevelCallback = ^(Waver * waver) {
+            waver.level = 1;
+        };
     }
     return _waveView;
 }
+#pragma mark - HCSpringBoardDelegate
+- (void)springBoardDidScroll:(HCSpringBoardView *)springBoard
+{
+    [self eCardHidden];
+}
+
 
 #pragma mark - 快捷方法
 //递归查找需要显示的图标

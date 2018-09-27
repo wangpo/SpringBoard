@@ -13,14 +13,15 @@
 #import "HCFavoriteFolderView.h"
 #import "HCFavoriteIconModel.h"
 #import "HCFavoriteIconView.h"
+@class HCSpringBoardView;
 
 @protocol HCSpringBoardDelegate <NSObject>
+- (void)springBoardDidScroll:(HCSpringBoardView *)springBoard;
 
 @end
 
 extern const NSInteger drawIconTag;
-@interface HCSpringBoardView : UIView
-<
+@interface HCSpringBoardView : UIView<
 UIScrollViewDelegate,
 HCFavoriteIconDelegate,
 HCLoveFolderDelegate,

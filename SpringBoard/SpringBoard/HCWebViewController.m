@@ -23,19 +23,19 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     _navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
-    _navBarView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.2];
+    _navBarView.backgroundColor = [UIColor colorWithRed:138.0/255.0 green:184.0/255.0 blue:250.0/255.0 alpha:1];
     [self.view addSubview:_navBarView];
     
     _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 40)];
     _titleLabel.backgroundColor = [UIColor clearColor];
     _titleLabel.textColor = [UIColor blackColor];
-    _titleLabel.font = [UIFont systemFontOfSize:16.0f];
+    _titleLabel.font = [UIFont systemFontOfSize:20.0f];
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.text = self.title;
     [_navBarView addSubview:_titleLabel];
     
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    closeBtn.frame = CGRectMake(kScreenSize.width - 60, (IPhoneX ? 44 : 20), 30, 30);
+    closeBtn.frame = CGRectMake(kScreenSize.width - 40, (IPhoneX ? 44 : 20)+7, 30, 30);
     [closeBtn setImage:[UIImage imageNamed:@"app_close"] forState:UIControlStateNormal];
     [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
@@ -60,7 +60,7 @@
 {
     if (!_blankView) {
         _blankView = [[UIView alloc] initWithFrame:CGRectZero];
-        _blankView.backgroundColor = [UIColor clearColor];
+        _blankView.backgroundColor = [UIColor whiteColor];
         
         UILabel *contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 200, kScreenSize.width,20)];
         contentLabel.backgroundColor = [UIColor clearColor];

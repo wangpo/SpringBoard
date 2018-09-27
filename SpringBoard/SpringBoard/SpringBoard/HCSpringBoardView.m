@@ -43,6 +43,8 @@ const NSInteger drawIconTag = 222;
     self = [super initWithFrame:frame];
     if (self) {
         self.userInteractionEnabled = YES;
+        // app从后台进入前台都会调用这个方法
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationWillEnterForegroundNotification object:nil];
         
         self.allFrame = [[NSMutableArray alloc]init];
         NSInteger rowOnePage = [self getOnePageRomByDevice];
@@ -972,6 +974,16 @@ const NSInteger drawIconTag = 222;
         }
     }
     return iconRectArray;
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)noti
+{
+    [self doneButtonAction];
+}
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.springBoardDelegate springBoardDidScroll:self];
 }
 
 @end
