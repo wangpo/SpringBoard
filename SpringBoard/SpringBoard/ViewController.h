@@ -19,7 +19,6 @@
 @property (nonatomic, strong) HCFavoriteIconModel *favoriteMainMenu;
 @property (nonatomic, strong) UIView * navBarView;
 @property (nonatomic, strong) UILabel *titleLabel;
-- (void)displayMenu;
 - (void)eCardHidden;
 @end
 

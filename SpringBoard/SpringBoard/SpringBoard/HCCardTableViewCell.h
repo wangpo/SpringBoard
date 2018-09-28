@@ -10,8 +10,8 @@
 
 @interface HCCardTableViewCell : UITableViewCell
 
-@property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UIImageView *logoImageView;
 @property (nonatomic, strong) UILabel *titleLabel;
-
+@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UILabel *accessoryLabel;
 @end

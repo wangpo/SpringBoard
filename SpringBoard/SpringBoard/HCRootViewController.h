@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
+#import "HCLastViewController.h"
 
 @interface HCRootViewController : UIViewController
 @property (nonatomic, strong)  ViewController *nextViewController;
+@property (nonatomic, strong) HCLastViewController *lastVC;
 @end

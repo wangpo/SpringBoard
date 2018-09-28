@@ -10,6 +10,7 @@
 #import "HCAssistant.h"
 #import "HCPreviousPage.h"
 
+
 @interface HCRootViewController ()<UIScrollViewDelegate>
 {
   
@@ -22,6 +23,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"bg"] stretchableImageWithLeftCapWidth:320 topCapHeight:568]];
+    
+    
     CGRect scrollRect = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     UIScrollView *loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
     loveScrollView.bounces = NO;
@@ -41,7 +46,13 @@
     nextView.frame = CGRectMake(ScreenWidth, 0, ScreenWidth, ScreenHeight);
     [loveScrollView addSubview:nextView];
     
-    loveScrollView.contentSize = CGSizeMake(ScreenWidth * 2, ScreenHeight);
+    _lastVC = [[HCLastViewController alloc] init];
+    UIView *lastView = _lastVC.view;
+    lastView.frame = CGRectMake(ScreenWidth*2, 0, ScreenWidth, ScreenHeight);
+    [loveScrollView addSubview:lastView];
+    
+    
+    loveScrollView.contentSize = CGSizeMake(ScreenWidth * 3, ScreenHeight);
     [loveScrollView setContentOffset:CGPointMake(ScreenWidth, 0)];
     
 }

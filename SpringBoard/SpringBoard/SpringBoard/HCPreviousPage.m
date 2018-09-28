@@ -31,15 +31,25 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _dataSource = @[
-                        @{@"title":@"公积金",@"image":@"公积金",@"url":@"http://old.bjgjj.gov.cn",@"bg":@"bg1"},
-                        @{@"title":@"社保",@"image":@"社保",@"url":@"http://m.bjrbj.gov.cn",@"bg":@"bg2"},
-                        @{@"title":@"水费",@"image":@"水费",@"url":@"",@"bg":@"bg3"},
-                        @{@"title":@"电费",@"image":@"24小时图书馆",@"url":@"",@"bg":@"bg4"},
-                        @{@"title":@"燃气费",@"image":@"燃气",@"url":@"",@"bg":@"bg5"},
+        _dataSource = @[@{@"title":@"头条新闻",
+                          @"image":@"新闻",
+                          @"url":@"https://www.toutiao.com/a6604606535190446596/",
+                          @"content":@"IOS 12太给力，导致iPhone 5S都重新开售，全新版只要1000元"},
+                        @{@"title":@"公积金",
+                          @"image":@"公积金",
+                          @"url":@"http://old.bjgjj.gov.cn",
+                          @"content":@"￥3500"},
+                        @{@"title":@"社保",
+                          @"image":@"社保",
+                          @"url":@"http://m.bjrbj.gov.cn",
+                          @"content":@"￥1500元"},
+                        @{@"title":@"水费",
+                          @"image":@"水费",
+                          @"url":@"",
+                          @"content":@"￥35元"},
                        ];
      
-         self.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"bg"] stretchableImageWithLeftCapWidth:320 topCapHeight:568]];
+        self.backgroundColor = [UIColor clearColor];
         self.mTableView  = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, kScreenSize.height) style:UITableViewStyleGrouped];
         self.mTableView.delegate = self;
         self.mTableView.dataSource = self;
@@ -48,7 +58,7 @@
         self.mTableView.tableHeaderView = [self tableHeaderView];
         self.mTableView.backgroundColor = [UIColor clearColor];
         [self addSubview:self.mTableView];
-        self.mTableView.rowHeight = 85;
+        self.mTableView.rowHeight = 155;
     }
     return self;
 }
@@ -94,7 +104,7 @@
     NSDictionary *dict = _dataSource[indexPath.row];
     cell.titleLabel.text = [dict objectForKey:@"title"];
     cell.logoImageView.image = [UIImage imageNamed:[dict objectForKey:@"image"]];
-    cell.backgroundImageView.image = [UIImage imageNamed:[dict objectForKey:@"bg"]];
+    cell.contentLabel.text =  [dict objectForKey:@"content"];
 
     return cell;
 }

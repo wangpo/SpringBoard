@@ -40,6 +40,7 @@
 		CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD23573A21522EFE00EE647F /* HCFavoriteIconView.m */; };
 		CD4C9ECA215C6FF300DDA9E0 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C9EC9215C6FF300DDA9E0 /* Bugly.framework */; };
 		CD4C9ECC215C701F00DDA9E0 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4C9ECB215C701F00DDA9E0 /* Security.framework */; };
+		CD4C9ECF215CC10D00DDA9E0 /* HCLastViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4C9ECE215CC10D00DDA9E0 /* HCLastViewController.m */; };
 		CD5BED1F21533ABA004654DA /* HCPreviousPage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED1E21533ABA004654DA /* HCPreviousPage.m */; };
 		CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED21215348FE004654DA /* HCWebViewController.m */; };
 		CD5BED2521539734004654DA /* HCRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD5BED2421539734004654DA /* HCRootViewController.m */; };
@@ -101,6 +102,8 @@
 		CD23573A21522EFE00EE647F /* HCFavoriteIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCFavoriteIconView.m; sourceTree = "<group>"; };
 		CD4C9EC9215C6FF300DDA9E0 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		CD4C9ECB215C701F00DDA9E0 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CD4C9ECD215CC10D00DDA9E0 /* HCLastViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCLastViewController.h; sourceTree = "<group>"; };
+		CD4C9ECE215CC10D00DDA9E0 /* HCLastViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCLastViewController.m; sourceTree = "<group>"; };
 		CD5BED1D21533ABA004654DA /* HCPreviousPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPreviousPage.h; sourceTree = "<group>"; };
 		CD5BED1E21533ABA004654DA /* HCPreviousPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPreviousPage.m; sourceTree = "<group>"; };
 		CD5BED20215348FE004654DA /* HCWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCWebViewController.h; sourceTree = "<group>"; };
@@ -206,6 +209,8 @@
 				CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */,
 				CD23570E21522E8D00EE647F /* ViewController.h */,
 				CD23570F21522E8D00EE647F /* ViewController.m */,
+				CD4C9ECD215CC10D00DDA9E0 /* HCLastViewController.h */,
+				CD4C9ECE215CC10D00DDA9E0 /* HCLastViewController.m */,
 				CD64014B215B217900E387BF /* ISRDataHelper.h */,
 				CD64014C215B217900E387BF /* ISRDataHelper.m */,
 				CD23571121522E8D00EE647F /* Main.storyboard */,
@@ -360,6 +365,7 @@
 				CD23574521522EFE00EE647F /* HCBankListViewController.m in Sources */,
 				CD5BED22215348FE004654DA /* HCWebViewController.m in Sources */,
 				CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */,
+				CD4C9ECF215CC10D00DDA9E0 /* HCLastViewController.m in Sources */,
 				CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */,
 				CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */,
 			);

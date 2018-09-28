@@ -60,7 +60,13 @@ const NSInteger drawIconTag = 222;
                                                         pageCount:pageCount
                                                    andOnePageIcon:onePageSize];
         
+        
         CGRect scrollRect = CGRectMake(0, 20, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT)+60);
+        if (IPHONE6Plus) {
+            scrollRect = CGRectMake(0, 20, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT));
+        }else if (IPHONE5) {
+            scrollRect = CGRectMake(0, 20, ScreenWidth, rowOnePage*(ICONIMG_HEIGHT));
+        }
         loveScrollView = [[UIScrollView alloc]initWithFrame:scrollRect];
         loveScrollView.bounces = NO;
         loveScrollView.pagingEnabled = YES;
@@ -70,8 +76,12 @@ const NSInteger drawIconTag = 222;
         loveScrollView.delegate = self;
         [self addSubview:loveScrollView];
         
+        CGRect pageControlFrame = CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+35, ScreenWidth, 20);
+        if (IPHONE6Plus) {
+            pageControlFrame = CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+15, ScreenWidth, 20);
+        }
         lovePageControl = [[UIPageControl alloc]
-                           initWithFrame:CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+35, ScreenWidth, 20)];
+                           initWithFrame:pageControlFrame];
         [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
         lovePageControl.backgroundColor = [UIColor clearColor];
@@ -890,18 +900,6 @@ const NSInteger drawIconTag = 222;
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     lovePageControl.currentPage = scrollView.contentOffset.x/CGRectGetWidth(scrollView.frame);
-    
-    AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-        
-     if (lovePageControl.currentPage == 0) {
-         del.launcherController.nextViewController.titleLabel.text = @"公民";
-    } else  if (lovePageControl.currentPage == 1) {
-        del.launcherController.nextViewController.titleLabel.text = @"法人";
-    } else if (lovePageControl.currentPage == 2) {
-        del.launcherController.nextViewController.titleLabel.text = @"公务员";
-    } else {
-        del.launcherController.nextViewController.titleLabel.text = @"";
-    }
     
 }
 

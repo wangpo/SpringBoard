@@ -35,9 +35,10 @@
     [_navBarView addSubview:_titleLabel];
     
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    closeBtn.frame = CGRectMake(kScreenSize.width - 40, (IPhoneX ? 44 : 20)+7, 30, 30);
+    closeBtn.frame = CGRectMake(kScreenSize.width - 50, (IPhoneX ? 44 : 20)+2, 40, 40);
     [closeBtn setImage:[UIImage imageNamed:@"app_close"] forState:UIControlStateNormal];
     [closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [closeBtn.imageView setContentMode:UIViewContentModeCenter];
     [closeBtn addTarget:self action:@selector(close:) forControlEvents:UIControlEventTouchUpInside];
     [_navBarView addSubview:closeBtn];
     

@@ -22,9 +22,11 @@
 @property (nonatomic, strong) NSMutableArray *speechKeysArray;
 @property (nonatomic, strong) HCSpringBoardView *springBoard;
 @property (nonatomic, strong) UIImageView *cardView;
+@property (nonatomic, strong) UIView *shadeView;
 @property (nonatomic, strong) UIView *bottomView;
 @property (nonatomic, strong) NSString*speechText;
 @property (nonatomic, strong) Waver *waveView;
+@property (nonatomic, strong) UIImageView *arrowsImageView;
 //不带界面的识别对象
 @property (nonatomic, strong) IFlySpeechRecognizer *iFlySpeechRecognizer;
 
@@ -36,12 +38,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.automaticallyAdjustsScrollViewInsets = NO;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[[UIImage imageNamed:@"bg"] stretchableImageWithLeftCapWidth:320 topCapHeight:568]];
-    [self.view addSubview:self.navBarView];
+    self.view.backgroundColor = [UIColor clearColor];
     //获取序列化到本地的所有菜单
     NSDictionary *mainMenuDict = [[NSDictionary alloc]initWithContentsOfFile:DOCUMENT_FOLDER(kMenuFileName)];
     _favoriteMainMenu = [HCFavoriteIconModel modelWithDictionary:mainMenuDict];
     [self displayMenu];
+    //底部Tabbar
+    [self.view addSubview:self.bottomView];
+   
+    [self.view addSubview:self.shadeView];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self                     action:@selector(eCardHidden)];
+    [self.shadeView addGestureRecognizer:tapGesture];
+    
+    [self.view addSubview:self.cardView];
+   
+    [self.view addSubview:self.navBarView];
     
 }
     
@@ -49,16 +60,16 @@
 {
     HCWebViewController *webVC = [[HCWebViewController alloc] init];
     webVC.title = @"应用超市";
-    webVC.url = @"http://t200storemarket.zhengtoon.com/app/index.html#/";
+    webVC.url = @"http://storemarket.zhengtoon.com/app/index.html?phoneflag=1";
     AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
     [del.launcherController presentViewController:webVC animated:YES completion:nil];
 }
 
 - (void)eCardBtnAction:(UIButton *)sender
 {
-    if (self.cardView.alpha == 0) {
+    if (self.cardView.hidden) {
         [self eCardShow];
-    }else if(self.cardView.alpha == 1){
+    }else{
         [self eCardHidden];
     }
 }
@@ -66,17 +77,27 @@
 - (void)eCardShow
 {
     [UIView animateWithDuration:0.3 animations:^{
-        self.cardView.alpha = 1;
+        self.shadeView.hidden = NO;
+        self.cardView.hidden = NO;
         self.cardView.frame = CGRectMake(0,  (IPhoneX ? 88 : 64), kScreenSize.width, 150);
+        self.arrowsImageView.transform = CGAffineTransformRotate(self.arrowsImageView.transform,  M_PI);
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
 - (void)eCardHidden
 {
-    [UIView animateWithDuration:0.3 animations:^{
-        self.cardView.alpha = 0;
-        self.cardView.frame = CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 0);
-    }];
+    if(!self.cardView.hidden){
+        [UIView animateWithDuration:0.3 animations:^{
+            self.cardView.frame = CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
+            self.arrowsImageView.transform = CGAffineTransformRotate(self.arrowsImageView.transform,  M_PI);
+        } completion:^(BOOL finished) {
+            self.cardView.hidden = YES;
+            self.shadeView.hidden = YES;
+        }];
+    }
+   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,23 +128,17 @@
         [userDefaultsLoveMenu synchronize];
     }
     
-    //汇总关键字
+    //汇总语音关键字
     self.speechKeysArray = [NSMutableArray arrayWithCapacity:0];
     [self.favoriteMainMenu.itemList enumerateObjectsUsingBlock:^(HCFavoriteIconModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [self.speechKeysArray addObject:obj.name];
     }];
-    
+    [self.speechKeysArray addObjectsFromArray:@[@"电费",@"设置"]];
     //根据数据显示菜单
     if ([self.view viewWithTag:SpringBoardTag]) {
         [_springBoard removeFromSuperview];
     }
     [self.view addSubview:self.springBoard];
-
-    self.cardView.frame =  CGRectMake(0,   (IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
-    self.cardView.alpha = 0;
-    [self.view addSubview:self.cardView];
-    //底部Tabbar
-    [self.view addSubview:self.bottomView];
     
 }
 
@@ -212,6 +227,12 @@
         if ([self.speechText containsString:@"打开"] || [self.speechText containsString:@"查询"]) {
             NSString *keyword = [self hitAppNameBySpeechKeywords:self.speechText];
             if (keyword) {
+                if ([keyword isEqualToString:@"设置"]) {
+                    HCBankListViewController *menuListViewController = [[HCBankListViewController alloc] initWithMainMenu:self.favoriteMainMenu.itemList];
+                    AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                    [del.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
+                    return;
+                }
                 HCWebViewController *webVC = [[HCWebViewController alloc] init];
                 webVC.title = keyword;
                 AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -263,22 +284,27 @@
         [_navBarView addSubview:effectView];
         
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 44 : 20), kScreenSize.width, 40)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake((kScreenSize.width - 100)/2, (IPhoneX ? 44 : 20), 60, 40)];
         _titleLabel.backgroundColor = [UIColor clearColor];
-        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.text =  @"公民";
+        _titleLabel.text =  @"市民";
         [_navBarView addSubview:_titleLabel];
+        
+        _arrowsImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_titleLabel.frame), CGRectGetMinY(_titleLabel.frame)+5, 30, 30)];
+        _arrowsImageView.image = [UIImage imageNamed:@"arrows"];
+        [_navBarView addSubview:_arrowsImageView];
+        
         
         UIView *line = [[UIView alloc] init];
         line.backgroundColor = [UIColor whiteColor];
-        line.frame = CGRectMake(0, 0, 48, 3);
+        line.frame = CGRectMake(0, 0, 100, 3);
         line.center = CGPointMake(kScreenSize.width/2, CGRectGetMaxY(_titleLabel.frame));
         [_navBarView addSubview:line];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = _titleLabel.frame;
+        button.frame = CGRectMake(_titleLabel.frame.origin.x, _titleLabel.frame.origin.y, 100, 40);
         [button addTarget:self action:@selector(eCardBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [_navBarView addSubview:button];
         
@@ -290,11 +316,22 @@
     }
     return _navBarView;
 }
-    
+
+- (UIView *)shadeView
+{
+    if (!_shadeView) {
+        _shadeView = [[UIView alloc] initWithFrame:CGRectMake(0, (IPhoneX ? 88 : 64),  kScreenSize.width, kScreenSize.height - (IPhoneX ? 88 : 64))];
+        _shadeView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
+        _shadeView.hidden = YES;
+    }
+    return _shadeView;
+}
 - (UIImageView *)cardView
 {
     if (!_cardView) {
         _cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card"]];
+        _cardView.frame = CGRectMake(0,(IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
+        _cardView.hidden = YES;
     }
     return _cardView;
 }
@@ -331,6 +368,7 @@
             pButton.frame = CGRectMake(15*i+width*(i-1), (90-(width))/2, width, width);
             if (i == 3) {
                 //语音识别
+                 pButton.frame = CGRectMake(15*i+width*(i-1), (90-(width))/2 -4, width, width);
                 [pButton addTarget:self action:@selector(startSpeechRecognizer:) forControlEvents:UIControlEventTouchDown];
                  [pButton addTarget:self action:@selector(stopSpeechRecognizer:) forControlEvents:UIControlEventTouchUpInside];
             }else {

@@ -10,6 +10,7 @@
 #import "HCAssistant.h"
 @interface HCBankListViewController : UITableViewController
 
+@property(nonatomic, assign) BOOL isAppList;
 - (instancetype)initWithMainMenu:(NSArray *)mainMenu;
 
 @end
