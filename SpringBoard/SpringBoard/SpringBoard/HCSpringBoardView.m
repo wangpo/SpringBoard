@@ -8,12 +8,12 @@
 
 #import "HCSpringBoardView.h"
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "HCViewController.h"
 #import "HCFavoriteFolderFloatView.h"
 #import "HCFavoriteFolderMenuView.h"
 #import "AppDelegate.h"
-#import "HCPreviousPage.h"
 #import "HCWebViewController.h"
+
 @interface HCSpringBoardView()
 {
     CGPoint lastPoint;
@@ -134,8 +134,8 @@ const NSInteger drawIconTag = 222;
 
 - (void)setSpringBoardDelegate:(id<HCSpringBoardDelegate>)springBoardDelegate {
     _springBoardDelegate = springBoardDelegate;
-    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
-        ViewController *controller = (ViewController *)_springBoardDelegate;
+    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[HCViewController class]]) {
+        HCViewController *controller = (HCViewController *)_springBoardDelegate;
         self.favoriteMainMenu = controller.favoriteMainMenu;
     }
 }
@@ -688,12 +688,12 @@ const NSInteger drawIconTag = 222;
 }
 #pragma mark - 变更model display属性
 - (void)updateIconModelDisplay:(HCFavoriteIconModel *)allModel nodeIndex:(NSString *)nodel {
-    if ([allModel.type isEqualToString:kViewcontroller] || [allModel.type isEqualToString:kWebLocal] || [allModel.type isEqualToString:kWebNetwork]) {
+    if ([allModel.type isEqualToString:kViewcontroller]) {
         if ([allModel.nodeIndex isEqualToString:nodel]) {
             allModel.display = NO;
         }
     }
-    else if ([allModel.type isEqualToString:kMenuList] || [allModel.type isEqualToString:kMenuIcons]) {
+    else if ([allModel.type isEqualToString:kMenuList]) {
         for (int i = 0; i < allModel.itemList.count; i++) {
             [self updateIconModelDisplay:allModel.itemList[i] nodeIndex:nodel];
         }
@@ -712,8 +712,8 @@ const NSInteger drawIconTag = 222;
             }
             [menuItemView.layer removeAnimationForKey:@"rocking"];
         }
-        if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
-            ViewController *controller = (ViewController *)_springBoardDelegate;
+        if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[HCViewController class]]) {
+            HCViewController *controller = (HCViewController *)_springBoardDelegate;
             controller.navigationItem.rightBarButtonItem = nil;
         }
         _isEdit = NO;
@@ -731,8 +731,8 @@ const NSInteger drawIconTag = 222;
 
 //序列化总菜单
 - (void)archiverLoveMenuMainModel{
-    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[ViewController class]]) {
-        ViewController *controller = (ViewController *)_springBoardDelegate;
+    if (_springBoardDelegate && [_springBoardDelegate isKindOfClass:[HCViewController class]]) {
+        HCViewController *controller = (HCViewController *)_springBoardDelegate;
         NSDictionary *dict = [[controller.favoriteMainMenu modelToJSONObject] mutableCopy];
         [dict writeToFile:DOCUMENT_FOLDER(kMenuFileName) atomically:YES];
     }

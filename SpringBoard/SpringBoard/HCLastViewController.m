@@ -7,7 +7,7 @@
 //
 
 #import "HCLastViewController.h"
-#import "HCBankListViewController.h"
+#import "HCInstalledListViewController.h"
 #import "AppDelegate.h"
 
 @interface HCLastViewController ()
@@ -27,16 +27,12 @@
     button.frame = CGRectMake(0, 0, 150, 150);
     button.center = self.view.center;
     [self.view addSubview:button];
-    
-   
 }
 
 - (void)add
 {
-    AppDelegate *del = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    HCBankListViewController *menuListViewController = [[HCBankListViewController alloc] initWithMainMenu:del.launcherController.nextViewController.favoriteMainMenu.itemList];
-    menuListViewController.isAppList = YES;
-    [del.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
+    HCInstalledListViewController *menuListViewController = [[HCInstalledListViewController alloc] initWithMainMenu:APP.launcherController.midVC.favoriteMainMenu.itemList];
+    [APP.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:menuListViewController] animated:YES completion:nil];
     
 }
 

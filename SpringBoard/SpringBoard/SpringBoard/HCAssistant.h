@@ -13,8 +13,6 @@
 #pragma mark - window
 #define AppWindow ((AppDelegate *)[[UIApplication sharedApplication] delegate]).window
 
-#pragma mark - Tags
-#define SpringBoardTag 90
 
 #pragma mark - UserDefaultKey
 #define kUserDefaultSuiteNameLoveMenu @"kUserDefaultSuiteNameLoveMenu"
@@ -53,28 +51,28 @@
 
 #pragma mark - 宏定义
 #pragma mark - 菜单Key
-#define kWebLocal @"WebLocal"
-#define kWebNetwork @"WebNetwork"
-#define kMenuIcons @"MenuIcons"
+
+
+
 #define kMenuList @"MenuList"
 #define kViewcontroller @"Viewcontroller"
+
 #define kNodeType @"kNodeType"
-#define kActionId @"kActionId"
+
+#define kNodeName @"kNodeName"
 #define kImage @"kImage"
-#define kImageSeleted @"kImageSeleted"
-#define kMenuListImage @"kMenuListImage"
+#define kNodeDesc @"kNodeDesc"
+
+#define kNodeUrl @"kNodeUrl"
+
 #define kItems @"kItems"
-#define kTarget @"kTarget"
+
 #define kNeedLogin @"kNeedLogin"
 #define kIsDisplay @"kIsDisplay"
 #define kIsReadOnly @"kIsReadOnly"
-#define kTabIndex @"kTabIndex"
-#define kNodeName @"kNodeName"
+
 #define kNodeIndex @"kNodeIndex"
-#define kLoginName @"kLoginName"
-#define kSendController @"kSendController"
-#define kSortNum @"kSortNum"
-#define kNavigationObject @"kNavigationObject"
+
 
 @interface HCAssistant : NSObject
 //生成菜单结构

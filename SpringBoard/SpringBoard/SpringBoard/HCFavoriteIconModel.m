@@ -13,16 +13,13 @@
 
 + (NSDictionary *)modelCustomPropertyMapper {
     return @{@"image" : @"kImage",
-             @"imageSeleted" : @"kImageSeleted",
              @"name" : @"kNodeName",
+             @"desc" : @"kNodeDesc",
+             @"url" : @"kNodeUrl",
              @"display" : @"kIsDisplay",
              @"isReadOnly" : @"kIsReadOnly",
-             @"menuListImage" : @"kMenuListImage",
-             @"navigationPointing" : @"kNavigationObject",
              @"isNeedLogin" : @"kNeedLogin",
              @"nodeIndex" : @"kNodeIndex",
-             @"sortNum" : @"kSortNum",
-             @"targetController" : @"kSendController",
              @"type" : @"kNodeType",
              @"itemList" : @"kItems"};
 }

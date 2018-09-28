@@ -7,7 +7,6 @@
 //
 
 #import "HCFavoriteFolderFloatView.h"
-#import "ViewController.h"
 #import "HCSpringBoardView.h"
 #import "HCFavoriteFolderMenuView.h"
 

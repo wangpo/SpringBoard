@@ -115,7 +115,7 @@ static const CGFloat iconLabelFont = 13.0f;
     _loveIconModel = loveIconModel;
     
     [menuButton setImage:[UIImage imageNamed:_loveIconModel.image] forState:UIControlStateNormal];
-    [menuButton setImage:[UIImage imageNamed:_loveIconModel.imageSeleted] forState:UIControlStateHighlighted];
+    [menuButton setImage:[UIImage imageNamed:_loveIconModel.image] forState:UIControlStateHighlighted];
     menuLabel.text = _loveIconModel.name;
   
 }

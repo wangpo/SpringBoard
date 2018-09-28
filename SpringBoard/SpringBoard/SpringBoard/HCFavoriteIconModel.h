@@ -11,23 +11,16 @@
 @interface HCFavoriteIconModel : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *image;
-@property (nonatomic, copy) NSString *imageSeleted;
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, copy) NSString *url;
 
 @property (nonatomic, assign) BOOL display;
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, assign) BOOL isReadOnly;
-
-@property (nonatomic, copy) NSString *menuListImage;
-@property (nonatomic, copy) NSString *navigationPointing;
 @property (nonatomic, assign) BOOL isNeedLogin;
 @property (nonatomic, copy) NSString *nodeIndex;
-@property (nonatomic, assign) NSInteger sortNum;
-
-@property (nonatomic, copy) NSString *targetController;
-
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, strong) NSArray *itemList;
-
 
 @end

@@ -9,8 +9,6 @@
 #import "HCFavoriteFolderMenuView.h"
 #import "AppDelegate.h"
 #import "HCFavoriteFolderFloatView.h"
-#import "ViewController.h"
-
 #define ICON_WIDTH_FOLDER ([[UIScreen mainScreen] bounds].size.width-20-2)/3
 @implementation HCFavoriteFolderMenuView {
     NSMutableArray *allFrame;

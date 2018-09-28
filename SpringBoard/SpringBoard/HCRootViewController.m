@@ -8,13 +8,8 @@
 
 #import "HCRootViewController.h"
 #import "HCAssistant.h"
-#import "HCPreviousPage.h"
-
 
 @interface HCRootViewController ()<UIScrollViewDelegate>
-{
-  
-}
 
 @end
 
@@ -37,12 +32,13 @@
     loveScrollView.delegate = self;
     [self.view addSubview:loveScrollView];
     
-    HCPreviousPage *preView = [[HCPreviousPage alloc] init];
+    _preVC = [[HCPreviousViewController alloc] init];
+    UIView *preView =_preVC.view;
     preView.frame = CGRectMake(0, 0, ScreenWidth, ScreenHeight);
     [loveScrollView addSubview:preView];
     
-    _nextViewController = [[ViewController alloc] init];
-    UIView *nextView =_nextViewController.view;
+    _midVC = [[HCViewController alloc] init];
+    UIView *nextView =_midVC.view;
     nextView.frame = CGRectMake(ScreenWidth, 0, ScreenWidth, ScreenHeight);
     [loveScrollView addSubview:nextView];
     
@@ -50,7 +46,6 @@
     UIView *lastView = _lastVC.view;
     lastView.frame = CGRectMake(ScreenWidth*2, 0, ScreenWidth, ScreenHeight);
     [loveScrollView addSubview:lastView];
-    
     
     loveScrollView.contentSize = CGSizeMake(ScreenWidth * 3, ScreenHeight);
     [loveScrollView setContentOffset:CGPointMake(ScreenWidth, 0)];
@@ -60,7 +55,7 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [_nextViewController eCardHidden];
+    [_midVC eCardHidden];
 }
 
 
