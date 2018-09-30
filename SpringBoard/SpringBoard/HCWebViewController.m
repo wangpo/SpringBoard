@@ -48,13 +48,18 @@
          [self requestData];
     }else{
         self.blankView.frame = self.webView.bounds;
-        [self.webView addSubview:self.blankView];
+        [self.webView.scrollView addSubview:self.blankView];
     }
 }
 
 - (void)close:(UIButton *)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(closeWebView:)]) {
+        [self.delegate closeWebView:self];
+    }else{
+         [self dismissViewControllerAnimated:YES completion:nil];
+    }
+   
 }
 
 - (UIView *)blankView

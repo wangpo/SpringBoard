@@ -7,31 +7,12 @@
 //
 
 #import "HCInstalledListViewController.h"
-#import "HCFavoriteIconModel.h"
-
-@interface HCInstalledListViewController ()
-@property(nonatomic, strong) NSMutableArray *mainMenuList;
-@end
 
 @implementation HCInstalledListViewController
 
-- (instancetype)initWithMainMenu:(NSArray *)mainMenu {
-    self = [super initWithStyle:UITableViewStyleGrouped];
-    if (self) {
-        self.mainMenuList = [[NSMutableArray alloc] init];
-        __weak typeof(self) weakSelf = self;
-        [mainMenu enumerateObjectsUsingBlock:^(HCFavoriteIconModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if (obj.display) {
-                [weakSelf.mainMenuList addObject:obj];
-            }
-        }];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-     self.title = @"添加应用";
+    self.title = @"添加应用";
     self.tableView.rowHeight = 60;
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 40, 40);
@@ -46,31 +27,13 @@
 
 -(void)doneButtonAction:(UIButton*)sender
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(addAppToPageDone:)]) {
+        [_delegate addAppToPageDone:self];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - TableViewDelegate
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return CGFLOAT_MIN;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return CGFLOAT_MIN;
-}
-
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    return [[UIView alloc] init];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    return [[UIView alloc] init];
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
      return [_mainMenuList count];
@@ -78,16 +41,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *cellIdentifier = [NSString stringWithFormat:@"%ld %ld",indexPath.section,indexPath.row];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"cellIdentifier"];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         cell.textLabel.font = [UIFont systemFontOfSize:17];
-        
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
-        label.textAlignment = NSTextAlignmentRight;
-        label.text = @"添加";
-        cell.accessoryView = label;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     HCFavoriteIconModel *loveModel = [_mainMenuList objectAtIndex:indexPath.row];
     cell.imageView.image = [UIImage imageNamed:loveModel.image];
@@ -99,14 +58,56 @@
     cell.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
     
     cell.textLabel.text = [NSString stringWithFormat:@"%@",loveModel.name];
-    return cell;
     
+    if (cell.accessoryView) {
+        UIButton *installBtn = (UIButton *)cell.accessoryView;
+        installBtn.tag = indexPath.row;
+        if (loveModel.isAddToPage) {
+            [installBtn setTitle:@"已添加" forState:UIControlStateNormal];
+        }else{
+            [installBtn setTitle:@"添加" forState:UIControlStateNormal];
+        }
+    }else{
+        UIButton *installBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        installBtn.frame = CGRectMake(0, 0, 75, 30);
+        installBtn.layer.cornerRadius = 15;
+        installBtn.layer.masksToBounds = YES;
+        installBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14.0f];
+        [installBtn setBackgroundColor:[UIColor colorWithRed:236.0/255.0 green:236.0/255.0 blue:236.0/255.0 alpha:1.0]];
+        [installBtn setTitleColor:[UIColor colorWithRed:21.0/255.0 green:90.0/255.0 blue:198.0/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [installBtn addTarget:self action:@selector(accessoryBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        if (loveModel.isAddToPage) {
+            [installBtn setTitle:@"已添加" forState:UIControlStateNormal];
+        }else{
+            [installBtn setTitle:@"添加" forState:UIControlStateNormal];
+        }
+        cell.accessoryView = installBtn;
+        installBtn.tag = indexPath.row;
+    }
+    return cell;
     
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+
+- (void)accessoryBtnAction:(UIButton *)installBtn
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    HCFavoriteIconModel *loveModel = [_mainMenuList objectAtIndex:installBtn.tag];
+    [_mainMenuList enumerateObjectsUsingBlock:^(HCFavoriteIconModel *obj, NSUInteger idx, BOOL * _Nonnull stop){
+        if (loveModel == obj) {
+            obj.isAddToPage = !obj.isAddToPage;
+            
+            if (obj.isAddToPage) {
+                self.addToPageModel = obj;
+            }else{
+                self.addToPageModel = nil;
+            }
+        }else{
+            obj.isAddToPage = NO;
+        }
+        
+    }];
+    [self.tableView reloadData];
 }
+
 
 @end

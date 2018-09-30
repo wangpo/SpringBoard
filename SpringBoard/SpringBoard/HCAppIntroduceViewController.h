@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HCFavoriteIconModel.h"
+
 
 @interface HCAppIntroduceViewController : UIViewController
-@property (nonatomic, copy) NSString *url;
+
+@property (nonatomic, strong) HCFavoriteIconModel *loveModel;
+@property (nonatomic, weak) id parentVC;
 @end

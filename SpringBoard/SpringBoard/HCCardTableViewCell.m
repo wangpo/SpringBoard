@@ -8,6 +8,7 @@
 
 #import "HCCardTableViewCell.h"
 #import "HCAssistant.h"
+
 @interface HCCardTableViewCell()
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @end
@@ -56,20 +57,46 @@
     _titleLabel.font = [UIFont systemFontOfSize:14];
     [topBgView addSubview:_titleLabel];
     
+    _subtitleLabel = [[UILabel alloc] init];
+    _subtitleLabel.frame = CGRectMake(CGRectGetMaxX(_titleLabel.frame)+10, 10, _backgroundImageView.bounds.size.width - (CGRectGetMaxX(_titleLabel.frame)+10) - 10, 20);
+    _subtitleLabel.backgroundColor = [UIColor clearColor];
+    _subtitleLabel.textAlignment = NSTextAlignmentRight;
+    _subtitleLabel.textColor = [UIColor blackColor];
+    _subtitleLabel.font = [UIFont systemFontOfSize:14];
+    [topBgView addSubview:_subtitleLabel];
+    
+    
     _contentLabel = [[UILabel alloc] init];
-    _contentLabel.frame = CGRectMake(10, 10, _backgroundImageView.bounds.size.width - 20, _backgroundImageView.bounds.size.height -  20);
-    _contentLabel.numberOfLines = 3;
+    _contentLabel.frame = CGRectMake(10, 50, _backgroundImageView.bounds.size.width - 20, 60);
+    _contentLabel.numberOfLines = 2;
     _contentLabel.backgroundColor = [UIColor clearColor];
     _contentLabel.textColor = [UIColor blackColor];
     _contentLabel.font = [UIFont boldSystemFontOfSize:16];
     [_backgroundImageView addSubview:_contentLabel];
     
     _accessoryLabel = [[UILabel alloc] init];
-    _accessoryLabel.frame = CGRectMake(10, 10, _backgroundImageView.bounds.size.width - 20, _backgroundImageView.bounds.size.height -  20);
+    _accessoryLabel.frame = CGRectMake(10, _backgroundImageView.bounds.size.height -  30, 100, 20);
     _accessoryLabel.backgroundColor = [UIColor clearColor];
-    _accessoryLabel.textColor = [UIColor blackColor];
-    _accessoryLabel.font = [UIFont boldSystemFontOfSize:16];
+    _accessoryLabel.textColor = [UIColor darkGrayColor];
+    _accessoryLabel.font = [UIFont boldSystemFontOfSize:12];
     [_backgroundImageView addSubview:_accessoryLabel];
+    
+    
+    _btn1 = [BFSPicTextButton buttonWithType:UIButtonTypeCustom];
+    [_btn1 setImage:[UIImage imageNamed:@"查询"] forState:UIControlStateNormal];
+    [_btn1 setTitle:@"查询" forState:UIControlStateNormal];
+    [_btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _btn1.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+    [_contentLabel addSubview:_btn1];
+    _btn1.frame = CGRectMake(10, 0, 60, 60);
+    
+    _btn2 = [BFSPicTextButton buttonWithType:UIButtonTypeCustom];
+    [_btn2 setImage:[UIImage imageNamed:@"缴费"] forState:UIControlStateNormal];
+    [_btn2 setTitle:@"缴费" forState:UIControlStateNormal];
+    [_btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    _btn2.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+    [_contentLabel addSubview:_btn2];
+     _btn2.frame = CGRectMake(80, 0, 60, 60);
     
 }
 

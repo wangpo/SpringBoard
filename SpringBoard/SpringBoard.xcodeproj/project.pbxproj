@@ -52,6 +52,7 @@
 		CD9788FE215E02F7000EA36C /* HCSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9788FD215E02F7000EA36C /* HCSettingsViewController.m */; };
 		CD978901215E110C000EA36C /* HCBankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD978900215E110C000EA36C /* HCBankListViewController.m */; };
 		CD978904215E2791000EA36C /* HCAppIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD978903215E2791000EA36C /* HCAppIntroduceViewController.m */; };
+		CD9C6028215F1895009EBE8E /* BFSPicTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9C6026215F1895009EBE8E /* BFSPicTextButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -128,6 +129,8 @@
 		CD978900215E110C000EA36C /* HCBankListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCBankListViewController.m; sourceTree = "<group>"; };
 		CD978902215E2791000EA36C /* HCAppIntroduceViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCAppIntroduceViewController.h; sourceTree = "<group>"; };
 		CD978903215E2791000EA36C /* HCAppIntroduceViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCAppIntroduceViewController.m; sourceTree = "<group>"; };
+		CD9C6026215F1895009EBE8E /* BFSPicTextButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BFSPicTextButton.m; sourceTree = "<group>"; };
+		CD9C6027215F1895009EBE8E /* BFSPicTextButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BFSPicTextButton.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +229,8 @@
 				CD978903215E2791000EA36C /* HCAppIntroduceViewController.m */,
 				CD9788D9215DFA7C000EA36C /* HCCardTableViewCell.h */,
 				CD9788DB215DFA7C000EA36C /* HCCardTableViewCell.m */,
+				CD9C6027215F1895009EBE8E /* BFSPicTextButton.h */,
+				CD9C6026215F1895009EBE8E /* BFSPicTextButton.m */,
 				CD613C0A215B806900165BB0 /* HCPrivacyViewController.h */,
 				CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */,
 				CD5BED20215348FE004654DA /* HCWebViewController.h */,
@@ -382,6 +387,7 @@
 				CD978904215E2791000EA36C /* HCAppIntroduceViewController.m in Sources */,
 				CD23573C21522EFE00EE647F /* HCSpringBoardView.m in Sources */,
 				CD23573F21522EFE00EE647F /* HCFavoriteFolderMenuView.m in Sources */,
+				CD9C6028215F1895009EBE8E /* BFSPicTextButton.m in Sources */,
 				CD9788FA215DFB8D000EA36C /* main.m in Sources */,
 				CD23573B21522EFE00EE647F /* HCFavoriteFolderFloatView.m in Sources */,
 				CD23570D21522E8D00EE647F /* AppDelegate.m in Sources */,

@@ -19,8 +19,12 @@
 @property (nonatomic, assign) BOOL isEditing;
 @property (nonatomic, assign) BOOL isReadOnly;
 @property (nonatomic, assign) BOOL isNeedLogin;
+
 @property (nonatomic, copy) NSString *nodeIndex;
 @property (nonatomic, copy) NSString *type;
+
 @property (nonatomic, strong) NSArray *itemList;
+
+@property (nonatomic, assign) BOOL isAddToPage;
 
 @end

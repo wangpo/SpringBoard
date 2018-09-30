@@ -330,8 +330,11 @@
 {
     if (!_cardView) {
         _cardView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card"]];
+        _cardView.contentMode = UIViewContentModeScaleAspectFill;
         _cardView.frame = CGRectMake(0,(IPhoneX ? 88 : 64) -150, kScreenSize.width, 150);
         _cardView.hidden = YES;
+        
+        
     }
     return _cardView;
 }
@@ -404,6 +407,7 @@
     [_springBoard removeFromSuperview];
     _springBoard = nil;
     [self.view addSubview:self.springBoard];
+    [self.view sendSubviewToBack:self.springBoard];
     //序列化
     [_springBoard archiverIconModelsArray];
     [_springBoard archiverLoveMenuMainModel];

@@ -147,10 +147,21 @@
 {
     HCFavoriteIconModel *loveModel = [_mainMenuList objectAtIndex:indexPath.row];
     HCAppIntroduceViewController *webVC = [[HCAppIntroduceViewController alloc] init];
-    webVC.title = loveModel.name;
-    webVC.url = loveModel.url;
+    webVC.loveModel = loveModel;
+    webVC.parentVC = self;
     [self.navigationController pushViewController:webVC animated:YES];
-    
+}
+
+- (void)installAppRelayoutList:(HCFavoriteIconModel *)model
+{
+    NSUInteger index = [_mainMenuList indexOfObject:model];
+    if (index < [_mainMenuList count]) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        if (cell.accessoryView) {
+            UIButton *installBtn = (UIButton *)cell.accessoryView;
+            [self accessoryBtnAction:installBtn];
+        }
+    }
 }
 
 - (UIButton *)accessoryViewTypeOfInstall

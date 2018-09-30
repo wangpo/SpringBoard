@@ -14,8 +14,8 @@
 
 @interface HCPreviousViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (strong, nonatomic) UITableView    *mTableView;
-@property (strong, nonatomic) NSArray *dataSource;
+@property (strong, nonatomic) UITableView  *mTableView;
+@property (strong, nonatomic) NSArray      *dataSource;
 
 @end
 
@@ -26,21 +26,16 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
     self.dataSource = @[@{@"title":@"头条新闻",
-                      @"image":@"新闻",
-                      @"url":@"https://www.toutiao.com/a6604606535190446596/",
-                      @"content":@"IOS 12太给力，导致iPhone 5S都重新开售，全新版只要1000元"},
-                    @{@"title":@"公积金",
-                      @"image":@"公积金",
-                      @"url":@"http://old.bjgjj.gov.cn",
-                      @"content":@"￥3500"},
-                    @{@"title":@"社保",
-                      @"image":@"社保",
-                      @"url":@"http://m.bjrbj.gov.cn",
-                      @"content":@"￥1500元"},
-                    @{@"title":@"水费",
-                      @"image":@"水费",
-                      @"url":@"",
-                      @"content":@"￥35元"},
+                          @"image":@"新闻",
+                          @"url":@"http://baijiahao.baidu.com/s?id=1600415081824263444&wfr=spider&for=pc",
+                          @"content":@"政务信息化市场的隐形独角兽 思源政通百亿估值逻辑",
+                          @"accessory":@"评论345  1分钟前",
+                          },
+                    
+                        @{@"title":@"燃气费",
+                          @"image":@"燃气",
+                          @"subTitle":@"￥500",
+                          },
                     ];
     
     
@@ -50,6 +45,7 @@
     self.mTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.mTableView.tableFooterView = [UIView new];
     self.mTableView.tableHeaderView = [self tableHeaderView];
+    self.mTableView.tableFooterView = [self tableFooterView];
     self.mTableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.mTableView];
     self.mTableView.rowHeight = 155;
@@ -80,6 +76,25 @@
     return tableHeaderView;
 }
 
+
+- (UIView *)tableFooterView
+{
+    UIView *tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, 60)];
+    tableFooterView.backgroundColor = [UIColor clearColor];
+    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn.frame = CGRectMake((kScreenSize.width-40)/2, 10, 40, 40);
+    editBtn.layer.cornerRadius = 20;
+    editBtn.layer.masksToBounds = YES;
+    [editBtn setBackgroundColor:[UIColor colorWithWhite:0.9 alpha:0.5]];
+    [editBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    editBtn.titleLabel.font = [UIFont systemFontOfSize:12.0f];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [tableFooterView addSubview:editBtn];
+    return tableFooterView;
+}
+
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _dataSource.count;
@@ -91,14 +106,23 @@
     if (!cell) {
         cell = [[HCCardTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellID"];
         cell.backgroundColor = [UIColor clearColor];
-        
     }
     
     NSDictionary *dict = _dataSource[indexPath.row];
     cell.titleLabel.text = [dict objectForKey:@"title"];
     cell.logoImageView.image = [UIImage imageNamed:[dict objectForKey:@"image"]];
-    cell.contentLabel.text =  [dict objectForKey:@"content"];
-
+    
+    cell.subtitleLabel.text = [dict objectForKey:@"subTitle"];
+    cell.accessoryLabel.text = [dict objectForKey:@"accessory"];
+    
+    if ([dict objectForKey:@"content"]) {
+        cell.contentLabel.text =  [dict objectForKey:@"content"];
+        cell.btn1.hidden = YES;
+        cell.btn2.hidden = YES;
+    }else{
+        cell.btn1.hidden = NO;
+        cell.btn2.hidden = NO;
+    }
     return cell;
 }
 
