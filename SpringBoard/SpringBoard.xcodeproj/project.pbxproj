@@ -41,6 +41,8 @@
 		CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C0B215B806900165BB0 /* HCPrivacyViewController.m */; };
 		CD613C12215B8F4E00165BB0 /* Waver.m in Sources */ = {isa = PBXBuildFile; fileRef = CD613C0E215B8F4E00165BB0 /* Waver.m */; };
 		CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CD64014C215B217900E387BF /* ISRDataHelper.m */; };
+		CD73D1802160B28200D11A5A /* HCPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73D17F2160B28200D11A5A /* HCPageControl.m */; };
+		CD73D1832160D10C00D11A5A /* HCPlaceholderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73D1822160D10C00D11A5A /* HCPlaceholderViewController.m */; };
 		CD9788DF215DFA7D000EA36C /* HCPreviousViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9788DA215DFA7C000EA36C /* HCPreviousViewController.m */; };
 		CD9788E0215DFA7D000EA36C /* HCCardTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9788DB215DFA7C000EA36C /* HCCardTableViewCell.m */; };
 		CD9788E1215DFA7D000EA36C /* HCInstalledListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9788DD215DFA7C000EA36C /* HCInstalledListViewController.m */; };
@@ -112,6 +114,10 @@
 		CD613C11215B8F4E00165BB0 /* Waver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waver.h; sourceTree = "<group>"; };
 		CD64014B215B217900E387BF /* ISRDataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISRDataHelper.h; sourceTree = "<group>"; };
 		CD64014C215B217900E387BF /* ISRDataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISRDataHelper.m; sourceTree = "<group>"; };
+		CD73D17E2160B28200D11A5A /* HCPageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPageControl.h; sourceTree = "<group>"; };
+		CD73D17F2160B28200D11A5A /* HCPageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPageControl.m; sourceTree = "<group>"; };
+		CD73D1812160D10C00D11A5A /* HCPlaceholderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HCPlaceholderViewController.h; sourceTree = "<group>"; };
+		CD73D1822160D10C00D11A5A /* HCPlaceholderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HCPlaceholderViewController.m; sourceTree = "<group>"; };
 		CD9788D9215DFA7C000EA36C /* HCCardTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCCardTableViewCell.h; sourceTree = "<group>"; };
 		CD9788DA215DFA7C000EA36C /* HCPreviousViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCPreviousViewController.m; sourceTree = "<group>"; };
 		CD9788DB215DFA7C000EA36C /* HCCardTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCCardTableViewCell.m; sourceTree = "<group>"; };
@@ -217,6 +223,8 @@
 				CD9788DA215DFA7C000EA36C /* HCPreviousViewController.m */,
 				CD23570E21522E8D00EE647F /* HCViewController.h */,
 				CD23570F21522E8D00EE647F /* HCViewController.m */,
+				CD73D1812160D10C00D11A5A /* HCPlaceholderViewController.h */,
+				CD73D1822160D10C00D11A5A /* HCPlaceholderViewController.m */,
 				CD4C9ECD215CC10D00DDA9E0 /* HCLastViewController.h */,
 				CD4C9ECE215CC10D00DDA9E0 /* HCLastViewController.m */,
 				CD9788FC215E02F7000EA36C /* HCSettingsViewController.h */,
@@ -266,6 +274,8 @@
 				CD23572521522EFE00EE647F /* HCIndexRect.m */,
 				CD23573421522EFE00EE647F /* HCSpringBoardView.h */,
 				CD23572421522EFE00EE647F /* HCSpringBoardView.m */,
+				CD73D17E2160B28200D11A5A /* HCPageControl.h */,
+				CD73D17F2160B28200D11A5A /* HCPageControl.m */,
 				CD23572D21522EFE00EE647F /* YYModel */,
 			);
 			path = SpringBoard;
@@ -386,6 +396,7 @@
 				CD23574321522EFE00EE647F /* HCFavoriteIconModel.m in Sources */,
 				CD978904215E2791000EA36C /* HCAppIntroduceViewController.m in Sources */,
 				CD23573C21522EFE00EE647F /* HCSpringBoardView.m in Sources */,
+				CD73D1802160B28200D11A5A /* HCPageControl.m in Sources */,
 				CD23573F21522EFE00EE647F /* HCFavoriteFolderMenuView.m in Sources */,
 				CD9C6028215F1895009EBE8E /* BFSPicTextButton.m in Sources */,
 				CD9788FA215DFB8D000EA36C /* main.m in Sources */,
@@ -399,6 +410,7 @@
 				CD613C0C215B806900165BB0 /* HCPrivacyViewController.m in Sources */,
 				CD4C9ECF215CC10D00DDA9E0 /* HCLastViewController.m in Sources */,
 				CD9788DF215DFA7D000EA36C /* HCPreviousViewController.m in Sources */,
+				CD73D1832160D10C00D11A5A /* HCPlaceholderViewController.m in Sources */,
 				CD64014D215B217900E387BF /* ISRDataHelper.m in Sources */,
 				CD978901215E110C000EA36C /* HCBankListViewController.m in Sources */,
 				CD23574621522EFE00EE647F /* HCFavoriteIconView.m in Sources */,

@@ -37,7 +37,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"设置";
     self.normalMenuList = @[@{@"image":@"tab2",@"title":@"账户"},
                             @{@"image":@"指纹",@"title":@"指纹"},
                             @{@"image":@"安全",@"title":@"安全"},

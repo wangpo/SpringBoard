@@ -13,6 +13,7 @@
 #import "HCFavoriteFolderMenuView.h"
 #import "AppDelegate.h"
 #import "HCWebViewController.h"
+#import "HCPageControl.h"
 
 @interface HCSpringBoardView()
 {
@@ -24,7 +25,7 @@
     NSInteger onePageSize ;
     
     UIScrollView *loveScrollView;
-    UIPageControl *lovePageControl;
+    HCPageControl *lovePageControl;
     
     NSMutableArray *pagesView;
 }
@@ -80,9 +81,9 @@ const NSInteger drawIconTag = 222;
         if (IPHONE6Plus) {
             pageControlFrame = CGRectMake(0, CGRectGetMaxY(loveScrollView.frame)+15, ScreenWidth, 20);
         }
-        lovePageControl = [[UIPageControl alloc]
+        lovePageControl = [[HCPageControl alloc]
                            initWithFrame:pageControlFrame];
-        [lovePageControl setPageIndicatorTintColor:[UIColor lightGrayColor]];
+        [lovePageControl setPageIndicatorTintColor:[UIColor whiteColor]];
         [lovePageControl setCurrentPageIndicatorTintColor:[UIColor colorWithRed:0.00f green:0.48f blue:0.88f alpha:1.00f]];
         lovePageControl.backgroundColor = [UIColor clearColor];
         [self addSubview: lovePageControl];

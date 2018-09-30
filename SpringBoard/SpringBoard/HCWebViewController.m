@@ -21,7 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor lightGrayColor];
     _navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreenSize.width, (IPhoneX ? 88 : 64))];
     _navBarView.backgroundColor = [UIColor colorWithRed:138.0/255.0 green:184.0/255.0 blue:250.0/255.0 alpha:1];
     [self.view addSubview:_navBarView];

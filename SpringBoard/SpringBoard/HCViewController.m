@@ -15,6 +15,7 @@
 #import "HCSettingsViewController.h"
 #import "Waver.h"
 #import "HCBankListViewController.h"
+#import "HCPlaceholderViewController.h"
 
 @interface HCViewController ()<IFlySpeechRecognizerDelegate,HCSpringBoardDelegate,BankListDelegate>
 @property (nonatomic, strong) UIView * navBarView;
@@ -148,9 +149,26 @@
 
 - (void)bottomBtnClicked:(UIButton *)sender
 {
-    //设置
-    if (sender.tag == 5) {
+    if (sender.tag == 1) {
+        //消息
+        HCPlaceholderViewController *placeholderVC = [[HCPlaceholderViewController alloc] init];
+        placeholderVC.title = @"消息";
+        [APP.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:placeholderVC] animated:YES completion:nil];
+    }else if (sender.tag == 2) {
+        //通讯录
+        HCPlaceholderViewController *placeholderVC = [[HCPlaceholderViewController alloc] init];
+        placeholderVC.title = @"通讯录";
+        [APP.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:placeholderVC] animated:YES completion:nil];
+    }else if (sender.tag == 4) {
+        //头条
+        HCPlaceholderViewController *placeholderVC = [[HCPlaceholderViewController alloc] init];
+        placeholderVC.title = @"头条";
+        [APP.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:placeholderVC] animated:YES completion:nil];
+        
+    }else if (sender.tag == 5) {
+        //设置
         HCSettingsViewController *settingsVC = [[HCSettingsViewController alloc] initWithMainMenu:self.favoriteMainMenu.itemList];
+        settingsVC.title = @"设置";
         [APP.launcherController presentViewController:[[UINavigationController alloc] initWithRootViewController:settingsVC] animated:YES completion:nil];
     }
 
